@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ssafit.model.dao.VideoDao">
+	<resultMap type="Video" id="videoMap">
+		<result column="id" property="id" />
+		<result column="part" property="part" />
+		<result column="channelName" property="channelName" />
+		<result column="url" property="url" />
+		<result column="created_at" property="created_at" />
+		<result column="view_cnt" property="view_cnt" />
+	</resultMap>
+
+	<!-- 전체 비디오 조회 -->
+	<select id="selectAll" resultType="Video">
+		SELECT *
+		FROM Video;
+	</select>
+
+	<select id="selectOne" resultMap="videoMap">
+		SELECT *
+		FROM Video
+		WHERE
+		id=#{id};
+	</select>
+</mapper>
