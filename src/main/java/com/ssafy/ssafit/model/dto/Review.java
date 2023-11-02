@@ -3,8 +3,8 @@ package com.ssafy.ssafit.model.dto;
 public class Review {
 	int reviewId;
 	int videoId;
-	int user_seq;
-	String created_at;
+	int userSeq;
+	String createdAt;
 	String title;
 	String content;
 
@@ -28,20 +28,20 @@ public class Review {
 		this.videoId = videoId;
 	}
 
-	public int getUser_seq() {
-		return user_seq;
+	public int getUserSeq() {
+		return userSeq;
 	}
 
-	public void setUser_seq(int user_seq) {
-		this.user_seq = user_seq;
+	public void setUserSeq(int userSeq) {
+		this.userSeq = userSeq;
 	}
 
-	public String getCreated_at() {
-		return created_at;
+	public String getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public String getTitle() {
@@ -62,7 +62,8 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [reviewId=" + reviewId + ", videoId=" + videoId + ", user_seq=" + user_seq + ", created_at="
-				+ created_at + ", title=" + title + ", content=" + content + "]";
+		return "Review [reviewId=" + reviewId + ", videoId=" + videoId + ", userSeq=" + userSeq + ", createdAt="
+				+ createdAt + ", title=" + title + ", content=" + content + "]";
 	}
+
 }

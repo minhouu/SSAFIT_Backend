@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int logIn(User user) {
-		User dbUser = userDao.getUser(user);
+		User dbUser = userDao.getUser(user.getId());
 		if (user.getId().equals(dbUser.getId()) && user.getPassword().equals(dbUser.getPassword())) {
-			return 1;
+			return dbUser.getUserType();
 		}
 		return 0;
 	}

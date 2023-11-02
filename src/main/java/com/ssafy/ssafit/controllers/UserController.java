@@ -26,23 +26,28 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping
-	@ApiOperation(value="유저 추가", notes="새로운 유저를 추가합니다.")
+	@PostMapping("/join")
+	@ApiOperation(value="유저 추가", notes="RequestData : id, password, nickname, userType")
 	public void addUser(@RequestBody User user) {
 		userService.addUser(user);
 	}
 
 	@PostMapping("/login")
-	@ApiOperation(value="로그인", notes="로그인을 시도합니다.")
+	@ApiOperation(value="로그인", notes="RequestData : id, password")
 	public ResponseEntity<String> logIn(@RequestBody User user, HttpSession session) {
-		int isChecked = userService.logIn(user);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("auth", "admin");
-		if (isChecked == 1) {
-			session.setAttribute("loggedInUser", user.getId());
-			return new ResponseEntity<String>("login success", headers, HttpStatus.ACCEPTED);
+		// 로그인에 실패하면 userType == 0
+		// 로그인 성공시 userType == 1 or 2 or 3
+		int userType = userService.logIn(user);
+		HttpHeaders header = new HttpHeaders();
+		if (userType != 0) {
+			System.out.println("로그인 성공");
+			session.setAttribute("id", user.getId());
+			session.setAttribute("userType", userType);
+			return new ResponseEntity<String>("login success", header, HttpStatus.ACCEPTED);
 		} else {
-			return new ResponseEntity<String>("login failed", headers, HttpStatus.NOT_ACCEPTABLE);
+			System.out.println("로그인 실패");
+			session.invalidate();
+			return new ResponseEntity<String>("login failed", header, HttpStatus.UNAUTHORIZED);
 		}
 	}
 

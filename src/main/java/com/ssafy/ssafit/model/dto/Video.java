@@ -6,19 +6,10 @@ public class Video {
 	private String part;
 	private String channelName;
 	private String url;
-	private String created_at;
-	private int view_cnt;
+	private String createdAt;
+	private int viewCnt;
 
 	public Video() {
-	}
-	
-	public Video(String id, String title, String part, String channelName, String url) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.part = part;
-		this.channelName = channelName;
-		this.url = url;
 	}
 
 	public String getId() {
@@ -61,25 +52,26 @@ public class Video {
 		this.url = url;
 	}
 
-	public String getCreated_at() {
-		return created_at;
+	public String getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public int getView_cnt() {
-		return view_cnt;
+	public int getViewCnt() {
+		return viewCnt;
 	}
 
-	public void setView_cnt(int view_cnt) {
-		this.view_cnt = view_cnt;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
 
 	@Override
 	public String toString() {
 		return "Video [id=" + id + ", title=" + title + ", part=" + part + ", channelName=" + channelName + ", url="
-				+ url + ", created_at=" + created_at + ", view_cnt=" + view_cnt + "]";
+				+ url + ", createdAt=" + createdAt + ", viewCnt=" + viewCnt + "]";
 	}
+
 }

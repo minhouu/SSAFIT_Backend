@@ -6,7 +6,7 @@ CREATE TABLE video(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 part VARCHAR(100) NOT NULL,
-channelName VARCHAR(100) NOT NULL,
+channel_name VARCHAR(100) NOT NULL,
 url VARCHAR(100) NOT NULL,
 created_at DATETIME default NOW(),
 view_cnt INT DEFAULT 0
@@ -17,16 +17,17 @@ CREATE TABLE user(
 user_seq INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id VARCHAR(100) NOT NULL UNIQUE,
 password VARCHAR(100) NOT NULL,
-nickname VARCHAR(100) NOT NULL
+nickname VARCHAR(100) NOT NULL,
+user_type INT NOT NULL CHECK (user_type >= 1 AND user_type <= 3)
 )ENGINE = InnoDB;
 
 CREATE TABLE review (
-    reviewId int not null auto_increment primary key,
-    videoId int not null,
+    review_id int not null auto_increment primary key,
+    video_id int not null,
     user_seq INT NOT NULL,
     created_at DATETIME default NOW(),
     constraint fk_videoId
-        foreign key (videoId)
+        foreign key (video_id)
         references video (id)
         on delete cascade
         on update cascade,
