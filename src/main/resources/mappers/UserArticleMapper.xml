@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ssafit.model.dao.UserArticleDao">
+	<resultMap type="UserArticle" id="articleMap">
+		<result column="article_id" property="articleId" />
+		<result column="writer_seq" property="writerSeq" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="view_cnt" property="viewCnt" />
+		<result column="created_at" property="createdAt" />
+		<result column="is_edited" property="isEdited" />
+	</resultMap>
+
+	<!-- 게시물 전체 반환 -->
+	<select id="selectAll" resultMap="articleMap">
+		SELECT article_id, writer_seq,
+		title, view_cnt, created_at, is_edited FROM
+		user_article
+	</select>
+
+	<!-- 게시물 1개 상세 정보 반환 -->
+	<select id="selectOne" resultMap="articleMap">
+		SELECT * FROM user_article
+		WHERE article_id=#{articleId};
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="insertArticle" parameterType="UserArticle">
+		INSERT INTO
+		user_article
+		(writer_seq, title, content)
+		VALUES
+		(#{writerSeq},
+		#{title},
+		#{content})
+	</insert>
+
+	<!-- 게시물 수정 -->
+	<update id="updateArticle" parameterType="UserArticleComment">
+		UPDATE
+		user_article SET
+		content = #{content}, is_edited = #{isEdited} WHERE article_id =
+		#{articleId}
+	</update>
+
+	<!-- delete comment -->
+	<delete id="deleteArticle" parameterType="int">
+		DELETE FROM
+		user_article
+		WHERE article_id = #{articleId}
+	</delete>
+</mapper>

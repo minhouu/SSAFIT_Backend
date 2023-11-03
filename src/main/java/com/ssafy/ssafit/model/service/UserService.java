@@ -7,5 +7,7 @@ public interface UserService {
 	void addUser(User user);
 	
 	int logIn(User user);
+	
+	User getUser(String userId);
 
 }

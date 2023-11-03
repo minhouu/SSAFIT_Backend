@@ -20,29 +20,35 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/user")
-@Api(tags="유저 컨트롤러")
+@Api(tags = "유저 컨트롤러")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
 	@PostMapping("/join")
-	@ApiOperation(value="유저 추가", notes="RequestData : id, password, nickname, userType")
-	public void addUser(@RequestBody User user) {
+	@ApiOperation(value = "유저 추가", notes = "RequestData : id, password, nickname, userType")
+	public ResponseEntity<String> addUser(@RequestBody User user) {
 		userService.addUser(user);
+		return new ResponseEntity<String>("User Added", HttpStatus.OK);
 	}
 
 	@PostMapping("/login")
-	@ApiOperation(value="로그인", notes="RequestData : id, password")
+	@ApiOperation(value = "로그인", notes = "RequestData : id, password")
 	public ResponseEntity<String> logIn(@RequestBody User user, HttpSession session) {
 		// 로그인에 실패하면 userType == 0
 		// 로그인 성공시 userType == 1 or 2 or 3
 		int userType = userService.logIn(user);
 		HttpHeaders header = new HttpHeaders();
+
 		if (userType != 0) {
 			System.out.println("로그인 성공");
-			session.setAttribute("id", user.getId());
-			session.setAttribute("userType", userType);
+			// 로그인시 session에 seq, id, type 저장
+			// 해당 정보를 바탕으로 게시글, 댓글 update, delete시에 유저정보 확인
+			User dbUser = userService.getUser(user.getId());
+			session.setAttribute("user_id", dbUser.getId());
+			session.setAttribute("user_type", dbUser.getUserType());
+			session.setAttribute("user_seq", dbUser.getUserSeq());
 			return new ResponseEntity<String>("login success", header, HttpStatus.ACCEPTED);
 		} else {
 			System.out.println("로그인 실패");
@@ -51,19 +57,23 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/login/status")
-	@ApiOperation(value="로그인 상태 확인", notes="로그인 상태를 확인하고, 로그인이 되어있을 때 200을 반환합니다.")
+	@GetMapping("/status")
+	@ApiOperation(value = "로그인 상태 확인", notes = "로그인 상태를 확인하고, 로그인이 되어있을 때 200을 반환합니다.")
 	public ResponseEntity<String> checkLoginStatus(HttpSession session) {
 		// 세션에서 사용자 정보를 가져와 로그인 상태를 확인합니다.
-		if (session.getAttribute("loggedInUser") != null) {
-			return ResponseEntity.ok("User is logged in");
+		HttpHeaders header = new HttpHeaders();
+		if (session.getAttribute("user_id") != null) {
+			header.add("login_status", "true");
+			header.add("user_type", session.getAttribute("user_type").toString());
+			return new ResponseEntity<String>("User is logged in", header, HttpStatus.ACCEPTED);
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in");
+			header.add("login_status", "false");
+			return new ResponseEntity<String>("User is not logged in", header, HttpStatus.UNAUTHORIZED);
 		}
 	}
 
 	@GetMapping("/logout")
-	@ApiOperation(value="로그아웃", notes="로그아웃합니다.")
+	@ApiOperation(value = "로그아웃", notes = "로그아웃합니다.")
 	public ResponseEntity<String> logout(HttpSession session) {
 		// 로그아웃 시 세션에서 사용자 정보를 제거합니다.
 		session.invalidate();
