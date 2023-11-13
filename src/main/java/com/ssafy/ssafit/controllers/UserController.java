@@ -1,5 +1,8 @@
 package com.ssafy.ssafit.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +40,11 @@ public class UserController {
 
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "RequestData : id, password")
-	public ResponseEntity<String> logIn(@RequestBody User user, HttpSession session) {
+	public ResponseEntity<Map<String, String>> logIn(@RequestBody User user, HttpSession session) {
 		// 로그인에 실패하면 userType == 0
 		// 로그인 성공시 userType == 1 or 2 or 3
 		int userType = userService.logIn(user);
-		HttpHeaders header = new HttpHeaders();
+		Map<String, String> userMap = new HashMap<String, String>();
 
 		if (userType != 0) {
 			System.out.println("로그인 성공");
@@ -51,11 +54,15 @@ public class UserController {
 			session.setAttribute("user_id", dbUser.getId());
 			session.setAttribute("user_type", dbUser.getUserType());
 			session.setAttribute("user_seq", dbUser.getUserSeq());
-			return new ResponseEntity<String>("login success", header, HttpStatus.ACCEPTED);
+			String nickname = dbUser.getNickname();
+			int seq = dbUser.getUserSeq();
+			userMap.put("nickname", nickname);
+			userMap.put("userSeq", "" + seq);
+			return new ResponseEntity<Map<String, String>>(userMap, HttpStatus.ACCEPTED);
 		} else {
 			System.out.println("로그인 실패");
 			session.invalidate();
-			return new ResponseEntity<String>("login failed", header, HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Map<String, String>>(userMap, HttpStatus.UNAUTHORIZED);
 		}
 	}
 
