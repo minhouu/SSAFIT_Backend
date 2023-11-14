@@ -9,9 +9,4 @@ public interface VideoService {
 
 	Video getVideo(int id);
 
-	void addVideo();
-
-	void updateVideo();
-
-	void deleteVideo();
 }

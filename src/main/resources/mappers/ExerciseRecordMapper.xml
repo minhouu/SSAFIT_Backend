@@ -7,25 +7,54 @@
 <mapper namespace="com.ssafy.ssafit.model.dao.ExerciseRecordDao">
 
 	<!-- create -->
-	<insert id="insertRecord" parameterType="Record">
-		<selectKey keyProperty="record_id" order="AFTER" resultType="int">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-		INSERT INTO user (record_date, user_seq, trainner_seq)
+	<insert id="insertRecord" parameterType="ExerciseRecord">
+		INSERT INTO record (user_seq, trainner_seq)
 		VALUES
-		(record_date, user_seq, trainner_seq);
+		(#{userSeq}, #{trainnerSeq});
+	</insert>
 	
+	<insert id="insertDetail" parameterType="ExerciseDetail">
+		INSERT INTO detail (record_id, exercise_name, part, set_num, weight, reps)
+		VALUES
+		(#{recordId}, #{exerciseName}, #{part}, #{setNum}, #{weight}, #{reps});
 	
 	</insert>
 	
 	<!-- read -->
+	<select id="selectExercise" resultType="ExerciseRecord">
+		SELECT * 
+		FROM record r, detail d
+		WHERE r.record_id = d.record_id 
+		AND exercise_name = #{exerciseName};
+	</select>
 	
+	<select id="selectPart" resultType="ExerciseRecord">
+		SELECT * 
+		FROM record r, detail d
+		WHERE r.record_id = d.record_id
+		AND part = #{part};
+	</select>
 	
 	<!-- update -->
+	<update id="updateRecord" parameterType="ExerciseRecord">
+		UPDATE detail
+		SET weight = #{weight}, reps = #{reps}
+		WHERE record_id = #{recordId} AND detail_id = #{detailId};
+	</update>
 	
 	
 	<!-- delete -->
-
-
+	<delete id="deleteAllRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE record_id = #{recordId};
+		
+		DELETE FROM record
+		WHERE record_id = #{recordId};		
+	</delete>
+	
+	<delete id="deleteRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE detail_id = #{detailId};
+	</delete>
 
 </mapper>

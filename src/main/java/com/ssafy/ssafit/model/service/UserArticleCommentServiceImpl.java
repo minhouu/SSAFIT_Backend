@@ -17,6 +17,7 @@ public class UserArticleCommentServiceImpl implements UserArticleCommentService 
 	@Override
 	public List<UserArticleComment> getCommentList(int articleId) {
 		return commentDao.selectAll(articleId);
+	
 	}
 
 //	@Override
