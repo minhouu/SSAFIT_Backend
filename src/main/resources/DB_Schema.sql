@@ -31,7 +31,6 @@ CREATE TABLE user_article_comment (
 	article_id int not null,
     user_seq INT NOT NULL,
     created_at DATETIME default current_timestamp ON UPDATE current_timestamp,
-	title varchar(100),
     content varchar(255),
     is_edited INT NOT NULL default 0,
     
