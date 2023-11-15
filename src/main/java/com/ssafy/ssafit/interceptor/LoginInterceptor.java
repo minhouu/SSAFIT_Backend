@@ -2,23 +2,32 @@ package com.ssafy.ssafit.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.ssafy.ssafit.JwtUtil;
+
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
+	private static final String HEADER_AUTH = "access-token";
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-//		System.out.println("인터셉터 낚아채자");
-//		HttpSession session = request.getSession();
-//		if (session.getAttribute("id") == null) {
-//			System.out.println("실패");
-//			response.setHeader("blocked", "true");
-//			return false;
-//		}
-		return true;
+		if(request.getMethod().equals("OPTIONS")) {
+			return true;
+		}
+		
+		String token = request.getHeader(HEADER_AUTH);
+		if (token != null) {
+			jwtUtil.isValid(token);
+			return true;
+		}
+		throw new Exception("유효하지 않은 접근");
 	}
 }
