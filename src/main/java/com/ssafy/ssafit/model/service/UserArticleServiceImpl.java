@@ -22,6 +22,7 @@ public class UserArticleServiceImpl implements UserArticleService {
 	@Override
 	public UserArticle getArticle(int articleId) {
 		return articleDao.selectOne(articleId);
+
 	}
 
 	@Override

@@ -16,8 +16,9 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public List<Video> getVideoList() {
-		System.out.println("비디오 다 가져와");
+
 		return videoDao.selectAll();
+
 	}
 
 	@Override
@@ -25,22 +26,5 @@ public class VideoServiceImpl implements VideoService {
 		return videoDao.selectOne(id);
 	}
 
-	@Override
-	public void addVideo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateVideo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteVideo() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

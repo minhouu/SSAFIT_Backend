@@ -21,7 +21,8 @@
 		ua.writer_seq, u.nickname, ua.title, ua.content, ua.view_cnt,
 		ua.created_at, ua.is_edited
 		FROM user_article ua
-		JOIN user u ON ua.writer_seq = u.user_seq;
+		JOIN user u ON ua.writer_seq = u.user_seq
+    ORDER BY created_at DESC
 	</select>
 
 	<!-- 게시물 1개 상세 정보 반환 -->
