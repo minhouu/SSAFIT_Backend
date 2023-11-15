@@ -7,6 +7,7 @@
 	<resultMap type="UserArticle" id="articleMap">
 		<result column="article_id" property="articleId" />
 		<result column="writer_seq" property="writerSeq" />
+		<result column="nickname" property="nickname" />
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="view_cnt" property="viewCnt" />
@@ -16,15 +17,22 @@
 
 	<!-- 게시물 전체 반환 -->
 	<select id="selectAll" resultMap="articleMap">
-		SELECT article_id, writer_seq, title, view_cnt, created_at, is_edited 
-		FROM user_article
-		ORDER BY  created_at DESC
+		SELECT ua.article_id,
+		ua.writer_seq, u.nickname, ua.title, ua.content, ua.view_cnt,
+		ua.created_at, ua.is_edited
+		FROM user_article ua
+		JOIN user u ON ua.writer_seq = u.user_seq
+    ORDER BY created_at DESC
 	</select>
 
 	<!-- 게시물 1개 상세 정보 반환 -->
 	<select id="selectOne" resultMap="articleMap">
-		SELECT * FROM user_article
-		WHERE article_id=#{articleId};
+		SELECT ua.article_id,
+		ua.writer_seq, u.nickname, ua.title, ua.content, ua.view_cnt,
+		ua.created_at, ua.is_edited
+		FROM user_article ua
+		JOIN user u ON ua.writer_seq = u.user_seq
+        where ua.article_id = #{articleId}
 	</select>
 
 	<!-- 게시물 작성 -->

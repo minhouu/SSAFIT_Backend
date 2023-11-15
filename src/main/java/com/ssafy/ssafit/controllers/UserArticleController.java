@@ -35,6 +35,7 @@ public class UserArticleController {
 	@PostMapping
 	@ApiOperation(value = "게시글 추가", notes = "새로운 게시글을 추가합니다.")
 	public UserArticle addArticle(@RequestBody UserArticle article) {
+		System.out.println(article);
 		articleService.addArticle(article);
 		return article;
 	}

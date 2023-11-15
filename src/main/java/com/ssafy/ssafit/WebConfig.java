@@ -28,8 +28,9 @@ public class WebConfig implements WebMvcConfigurer {
 	//필드를 통해 의존성을 주입 받고
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		 registry.addInterceptor(loginInterceptor).addPathPatterns("/review");
-		 registry.addInterceptor(loginInterceptor).addPathPatterns("/video");
+		 registry.addInterceptor(loginInterceptor)
+		 .addPathPatterns("/**")
+		 .excludePathPatterns("/user/**", "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs");
 	}
 
 }
