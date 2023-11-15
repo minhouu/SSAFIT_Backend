@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 아직 구상중 -->
+<mapper namespace="com.ssafy.ssafit.model.dao.ExerciseRecordDao">
+
+	<!-- create -->
+	<insert id="insertRecord" parameterType="ExerciseRecord">
+		INSERT INTO record (user_seq, trainner_seq, body_weight, body_fat_mass, skeletal_muscle_mass)
+		VALUES
+		(#{userSeq}, #{trainnerSeq}, #{bodyWeight}, #{bodyFatMass}, #{skeletalMuscleMass});
+	</insert>
+	
+	<insert id="insertDetail" parameterType="ExerciseDetail">
+		INSERT INTO detail (record_id, exercise_name, part, set_num, weight, reps)
+		VALUES
+		(#{recordId}, #{exerciseName}, #{part}, #{setNum}, #{weight}, #{reps});
+	
+	</insert>
+	
+	<!-- read -->
+	<select id="selectRecordId">
+		SELECT record_id
+		FROM record
+		WHERE  user_seq = #{userSeq}
+		ORDER BY record_date DESC
+		LIMIT 1;
+	</select>
+	
+	<select id="selectExercise" resultType="ExerciseRecord">
+		SELECT * 
+		FROM record r, detail d
+		WHERE r.record_id = d.record_id 
+		AND exercise_name = #{exerciseName}
+		ORDER BY record_date DESC
+		LIMIT 10;
+	</select>
+	
+	<select id="selectPart" resultType="ExerciseRecord">
+		SELECT * 
+		FROM record r, detail d
+		WHERE r.record_id = d.record_id
+		AND part = #{part};
+	</select>
+	
+	<select id="selectWeight">
+		SELECT body_weight, body_fat_mass, skeletal_muscle_mass
+		FROM record
+		WHERE record_id = #{recordId}
+		ORDER BY record_date DESC
+		LIMIT 10;
+	</select>
+
+	<!-- update -->
+	<update id="updateRecord" parameterType="ExerciseRecord">
+		UPDATE detail
+		SET weight = #{weight}, reps = #{reps}
+		WHERE record_id = #{recordId} AND detail_id = #{detailId};
+	</update>
+	
+	
+	<!-- delete -->
+	<delete id="deleteAllRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE record_id = #{recordId};
+		
+		DELETE FROM record
+		WHERE record_id = #{recordId};		
+	</delete>
+	
+	<delete id="deleteRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE detail_id = #{detailId};
+	</delete>
+
+</mapper>

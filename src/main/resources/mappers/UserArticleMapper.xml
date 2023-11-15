@@ -16,9 +16,9 @@
 
 	<!-- 게시물 전체 반환 -->
 	<select id="selectAll" resultMap="articleMap">
-		SELECT article_id, writer_seq,
-		title, view_cnt, created_at, is_edited FROM
-		user_article
+		SELECT article_id, writer_seq, title, view_cnt, created_at, is_edited 
+		FROM user_article
+		ORDER BY  created_at DESC
 	</select>
 
 	<!-- 게시물 1개 상세 정보 반환 -->
