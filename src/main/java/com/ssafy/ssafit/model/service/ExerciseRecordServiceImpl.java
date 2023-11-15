@@ -19,50 +19,60 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 	@Autowired
 	private ExerciseRecordDao recordDao;
 	
+	//완료 손대지마셈
 	@Override
-	public void addRecord(String userSeq, ExerciseRecord exerciseRecord) {
-		// exerciseRecord (id x)
-		exerciseRecord.setUserSeq(Integer.parseInt(userSeq));
+	public void addRecord(ExerciseRecord exerciseRecord) {
+		// record Table에 넣기
 		recordDao.insertRecord(exerciseRecord); // 
-		// exerciseRecord (id o)
 		
+		//넣은 record의 id 받아오기
+		int userSeq = exerciseRecord.getUserSeq();
+		int recordId = recordDao.selectRecordId(userSeq);
+		// detail Table에 넣기
 		List<ExerciseDetail> details = exerciseRecord.getDetails();
+		
 		for(ExerciseDetail detail : details) {
-			detail.setRecordId(""+exerciseRecord.getRecordId());
+			detail.setRecordId(recordId);
 			recordDao.insertDetail(detail);
 		}
-		// 아직 insertDetail(exerciseRecord);
 		
 	}
 
 	@Override
-	public List<ExerciseRecord> selectExercise(String userSeq, String exerciseName) {
+	public List<ExerciseRecord> selectExercise(int userSeq, String exerciseName) {
 		
 		return recordDao.selectExercise(userSeq, exerciseName);
 	}
 
 	@Override
-	public List<ExerciseRecord> selectPart(String userSeq, String part) {
+	public List<ExerciseRecord> selectPart(int userSeq, String part) {
 		
 		return recordDao.selectPart(userSeq, part);
 	}
 
 	@Override
-	public void updateRecord(String userSeq, ExerciseRecord exerciseRecord) {
+	public List<ExerciseRecord> selectWeight(int userSeq) {
 		
-		recordDao.updateRecord(userSeq, exerciseRecord);
+		return recordDao.selectWeight(userSeq);
+	}
+	
+	@Override
+	public void updateRecord(ExerciseRecord exerciseRecord) {
+		
+		recordDao.updateRecord(exerciseRecord);
 	}
 
 	@Override
-	public void deleteAllRecord(String userSeq, int recordtId) {
+	public void deleteAllRecord(int userSeq, int recordtId) {
 		
 		recordDao.deleteAllRecord(userSeq, recordtId);	
 	}
 
 	@Override
-	public void deleteRecord(String userSeq, int detailId) {
+	public void deleteRecord(int userSeq, int detailId) {
 		
 		recordDao.deleteRecord(userSeq, detailId);
 	}
+
 
 }
