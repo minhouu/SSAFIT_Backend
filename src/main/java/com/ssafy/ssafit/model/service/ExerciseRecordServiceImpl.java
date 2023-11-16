@@ -37,11 +37,17 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		}
 		
 	}
-
+	
 	@Override
-	public List<ExerciseRecord> selectExercise(int userSeq, String exerciseName) {
+	public List<ExerciseRecord> selectAll(int userSeq){
 		
-		return recordDao.selectExercise(userSeq, exerciseName);
+		return recordDao.selectAll(userSeq);
+	};
+	
+	@Override
+	public List<ExerciseRecord> selectExercise(int userSeq, int exId) {
+		
+		return recordDao.selectExercise(userSeq);
 	}
 
 	@Override
