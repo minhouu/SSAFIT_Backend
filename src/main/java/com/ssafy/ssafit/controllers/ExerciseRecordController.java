@@ -48,23 +48,23 @@ public class ExerciseRecordController {
 	}
 	
 	//완료
-	@GetMapping("/exerciseName/{exerciseName}")
+	@GetMapping("/exerciseName/{exId}")
 	@ApiOperation(value = "해당 운동 종목 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")
-	public ResponseEntity<List<ExerciseRecord>> selectExercise(@PathVariable("exerciseName") String exerciseName) {
+	public ResponseEntity<List<ExerciseRecord>> selectExercise(@PathVariable("exId") int exId) {
 		int userSeq = 1;
 		
-		List<ExerciseRecord> data = recordService.selectExercise(userSeq, exerciseName);
+		List<ExerciseRecord> data = recordService.selectExercise(userSeq, exId);
 		return new ResponseEntity<List<ExerciseRecord>>(data, HttpStatus.OK);
 	}
 	
 	//완료
 	//파트에 관해서도 숫자로 구분하는것을 고려
-	@GetMapping("/part/{part}")
+	@GetMapping("/part/{exPart}")
 	@ApiOperation(value = "해당 부위 운동 기록 가져오기", notes = "해당 부위 운동 기록을 모두 가져옵니다.\\nParameter { part : part }")
-	public ResponseEntity<List<ExerciseRecord>> selectPart(@PathVariable("part") String part) {
+	public ResponseEntity<List<ExerciseRecord>> selectPart(@PathVariable("part") String exPart) {
 		int userSeq = 1;
 		
-		List<ExerciseRecord> data = recordService.selectPart(userSeq, part);
+		List<ExerciseRecord> data = recordService.selectPart(userSeq, exPart);
 		return new ResponseEntity<List<ExerciseRecord>>(data, HttpStatus.OK);
 	}
 	
