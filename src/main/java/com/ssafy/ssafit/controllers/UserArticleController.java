@@ -1,5 +1,6 @@
 package com.ssafy.ssafit.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -35,7 +36,6 @@ public class UserArticleController {
 	@PostMapping
 	@ApiOperation(value = "게시글 추가", notes = "새로운 게시글을 추가합니다.")
 	public UserArticle addArticle(@RequestBody UserArticle article) {
-		System.out.println(article);
 		articleService.addArticle(article);
 		return article;
 	}
@@ -43,6 +43,7 @@ public class UserArticleController {
 	@GetMapping
 	@ApiOperation(value = "게시글 전체 가져오기", notes = "게시글 전체를 가져옵니다. \n\n * URL Parameter { article-id : articleId }\nRequest : none\nResponse : List<UserArticle>, UserArticle 중 content 제외한 데이터")
 	public List<UserArticle> getArticles() {
+//		System.out.println("get articles");
 		return articleService.getArticleList();
 	}
 
@@ -51,24 +52,17 @@ public class UserArticleController {
 	public UserArticle getArticle(@PathVariable int articleId) {
 		return articleService.getArticle(articleId);
 	}
+	
+	@GetMapping("/{articleId}/view-cnt")
+	@ApiOperation(value = "조회수 증가", notes = "본인 게시물이 아닌 경우 userArticle의 viewCnt++")
+	public void viewCntUpdate(@PathVariable int articleId) {
+		articleService.increaseViewCnt(articleId);
+	}
+	
 
 	@PutMapping("/{articleId}")
 	@ApiOperation(value = "게시글 업데이트", notes = "기존 게시글을 업데이트합니다. request로 article의 온전한 객체를 보내줍니다.")
-	public ResponseEntity<String> updateArticle(@RequestBody UserArticle article, HttpSession session) {
-		
-//		프론트에서 하자
-//		
-//		int reqWriterId = article.getWriterSeq();
-//		int dbWriterId = (int) session.getAttribute("user_seq");
-//		if (reqWriterId == dbWriterId) {
-//			article.setIsEdited(1);
-//			articleService.updateArticle(article);
-//			return new ResponseEntity<String>("Update Success", HttpStatus.ACCEPTED);
-//		} else {
-//			return new ResponseEntity<String>("Update Failed : Only the writer can update the article",
-//					HttpStatus.UNAUTHORIZED);
-//		}
-		
+	public ResponseEntity<String> updateArticle(@RequestBody UserArticle article) {
 		article.setIsEdited(1);
 		articleService.updateArticle(article);
 		return new ResponseEntity<String>("Update Success", HttpStatus.ACCEPTED);
@@ -77,24 +71,6 @@ public class UserArticleController {
 	@DeleteMapping("/{articleId}")
 	@ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제합니다.")
 	public ResponseEntity<String> deleteArticle(@PathVariable int articleId, HttpSession session) {
-		
-//		더 좋은 방법이 있을지도
-//		
-//		int reqWriterId = articleService.getArticle(articleId).getWriterSeq();
-//		if (session.getAttribute("user_seq") == null) {
-//			return new ResponseEntity<String>("Not logged in", HttpStatus.UNAUTHORIZED);
-//		}
-//		int dbWriterId = (int) session.getAttribute("user_seq");
-//		System.out.println(reqWriterId);
-//		System.out.println(dbWriterId);
-//		if (reqWriterId == dbWriterId) {
-//			articleService.deleteArticle(articleId);
-//			return new ResponseEntity<String>("Delete Success", HttpStatus.ACCEPTED);
-//		} else {
-//			return new ResponseEntity<String>("Delete Failed : Only the writer can delete the article",
-//					HttpStatus.UNAUTHORIZED);
-//		}
-		
 		articleService.deleteArticle(articleId);
 		return new ResponseEntity<String>("Delete Success", HttpStatus.ACCEPTED);
 	}

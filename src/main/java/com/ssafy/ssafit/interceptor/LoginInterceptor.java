@@ -23,11 +23,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		
+//		System.out.println(request.getHeader(HEADER_AUTH));
 		String token = request.getHeader(HEADER_AUTH);
 		if (token != null) {
 			jwtUtil.isValid(token);
 			return true;
 		}
-		throw new Exception("유효하지 않은 접근");
+		throw new Exception("Access Token has problem");
 	}
 }

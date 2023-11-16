@@ -16,7 +16,7 @@ CREATE TABLE user_article (
     title VARCHAR(100) NOT NULL,
     content VARCHAR(10000) NOT NULL,
     view_cnt INT DEFAULT 0,
-    created_at DATETIME default current_timestamp ON UPDATE current_timestamp,
+    created_at DATETIME default current_timestamp,
     is_edited INT NOT NULL default 0,
     
     constraint fk_writer_seq
@@ -28,9 +28,10 @@ CREATE TABLE user_article (
 
 CREATE TABLE user_article_comment (
     comment_id int not null auto_increment primary key,
-	article_id int not null,
+  	article_id int not null,
     user_seq INT NOT NULL,
-    created_at DATETIME default current_timestamp ON UPDATE current_timestamp,
+    created_at DATETIME default current_timestamp,
+	  title varchar(100),
     content varchar(255),
     is_edited INT NOT NULL default 0,
     

@@ -73,4 +73,11 @@ public class UserArticle {
 	public void setIsEdited(int isEdited) {
 		this.isEdited = isEdited;
 	}
+
+	@Override
+	public String toString() {
+		return "UserArticle [articleId=" + articleId + ", writerSeq=" + writerSeq + ", nickname=" + nickname
+				+ ", title=" + title + ", content=" + content + ", viewCnt=" + viewCnt + ", createdAt=" + createdAt
+				+ ", isEdited=" + isEdited + "]";
+	}
 }

@@ -18,12 +18,14 @@ public class JwtUtil {
 	private static final String SECRET = "SSAFIT_FINALPJT";
 	
 	public String createToken(String key, String value) throws UnsupportedEncodingException {
-		return Jwts.builder()
+		String token = Jwts.builder()
 				.setHeaderParam("alg", "HS256")
 				.setHeaderParam("typ", "JWT")
 				.claim(key, value)
 				.signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
 				.compact();
+//		System.out.println(token);
+		return token;
 	}
 	
 	public Jws<Claims> isValid(String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {

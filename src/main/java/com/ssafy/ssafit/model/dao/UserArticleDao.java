@@ -8,6 +8,8 @@ public interface UserArticleDao {
 	List<UserArticle> selectAll();
 
 	UserArticle selectOne(int articleId);
+	
+	void increaseViewCnt(int articleId);
 
 	void insertArticle(UserArticle article);
 

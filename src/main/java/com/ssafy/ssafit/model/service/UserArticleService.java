@@ -8,6 +8,8 @@ public interface UserArticleService {
 	List<UserArticle> getArticleList();
 	
 	UserArticle getArticle(int articleId);
+	
+	void increaseViewCnt(int articleId);
 
 	void addArticle(UserArticle article);	
 

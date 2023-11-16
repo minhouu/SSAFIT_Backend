@@ -22,9 +22,13 @@ public class UserArticleServiceImpl implements UserArticleService {
 	@Override
 	public UserArticle getArticle(int articleId) {
 		return articleDao.selectOne(articleId);
-
 	}
 
+	@Override
+	public void increaseViewCnt(int articleId) {
+		articleDao.increaseViewCnt(articleId);
+	}
+	
 	@Override
 	public void addArticle(UserArticle article) {
 		articleDao.insertArticle(article);
