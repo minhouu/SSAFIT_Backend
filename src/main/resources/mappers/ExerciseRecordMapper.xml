@@ -14,9 +14,9 @@
 	</insert>
 	
 	<insert id="insertDetail" parameterType="ExerciseDetail">
-		INSERT INTO detail (record_id, exercise_name, part, set_num, weight, reps)
+		INSERT INTO detail (record_id, ex_id, set_num, weight, reps)
 		VALUES
-		(#{recordId}, #{exerciseName}, #{part}, #{setNum}, #{weight}, #{reps});
+		(#{recordId}, #{exId}, #{setNum}, #{weight}, #{reps});
 	
 	</insert>
 	
@@ -29,22 +29,44 @@
 		LIMIT 1;
 	</select>
 	
-	<select id="selectExercise" resultType="ExerciseRecord">
-		SELECT * 
-		FROM record r, detail d
-		WHERE r.record_id = d.record_id 
-		AND exercise_name = #{exerciseName}
+	<select id="selectAll">
+	SELECT e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+	FROM record r
+	JOIN detail d ON r.record_id = d.record_id
+	JOIN exercise e ON d.ex_id = e.ex_id
+	WHERE r.user_seq = #{userSeq} 
+	ORDER BY d.detail_id;
+	</select>
+	
+	
+	<!-- 특정 운동 최근 10번의 세션 정보 가져오기 -->
+	<select id="selectExercise">
+		SELECT e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		FROM record r
+		JOIN detail d ON r.record_id = d.record_id
+		JOIN exercise e ON d.ex_id = e.ex_id
+		WHERE r.record_id in (
+		SELECT record_id
+		FROM record
+		WHERE user_seq = #{userSeq}
 		ORDER BY record_date DESC
-		LIMIT 10;
+		LIMIT 10
+		)
+		AND
+		e.ex_id = #{exId}
+		ORDER BY d.detail_id
+		;
 	</select>
 	
-	<select id="selectPart" resultType="ExerciseRecord">
-		SELECT * 
-		FROM record r, detail d
-		WHERE r.record_id = d.record_id
-		AND part = #{part};
+	<!-- 부위에 일치하는 운동 가져오기 -->
+	<select id="selectPart">
+		SELECT e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		FROM detail d 
+		JOIN exercise e ON d.ex_id = e.ex_id
+		WHERE e.ex_part = #{exPart};
 	</select>
 	
+	<!-- 회원의 신체정보 들고오기 -->
 	<select id="selectWeight">
 		SELECT body_weight, body_fat_mass, skeletal_muscle_mass
 		FROM record
@@ -61,7 +83,7 @@
 	</update>
 	
 	
-	<!-- delete -->
+	<!-- delete 디테일까지 모두 delete -->
 	<delete id="deleteAllRecord" parameterType="int">
 		DELETE FROM detail
 		WHERE record_id = #{recordId};
@@ -70,6 +92,7 @@
 		WHERE record_id = #{recordId};		
 	</delete>
 	
+	<!-- 이름은 레코드지만 해당 운동 세트만 제거하는 메소드임 -->
 	<delete id="deleteRecord" parameterType="int">
 		DELETE FROM detail
 		WHERE detail_id = #{detailId};

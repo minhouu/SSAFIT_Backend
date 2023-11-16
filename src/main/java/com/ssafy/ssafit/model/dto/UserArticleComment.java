@@ -5,7 +5,6 @@ public class UserArticleComment {
 	private int articleId;
 	private int userSeq;
 	private String createdAt;
-	private String title;
 	private String content;
 	private int isEdited;
 
@@ -41,14 +40,6 @@ public class UserArticleComment {
 		this.createdAt = createdAt;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -68,7 +59,7 @@ public class UserArticleComment {
 	@Override
 	public String toString() {
 		return "UserArticleComment [commentId=" + commentId + ", articleId=" + articleId + ", userSeq=" + userSeq
-				+ ", createdAt=" + createdAt + ", title=" + title + ", content=" + content + "]";
+				+ ", createdAt=" + createdAt + ", content=" + content + "]";
 	}
 
 }
