@@ -1,5 +1,6 @@
 package com.ssafy.ssafit.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -54,21 +55,7 @@ public class UserArticleController {
 
 	@PutMapping("/{articleId}")
 	@ApiOperation(value = "게시글 업데이트", notes = "기존 게시글을 업데이트합니다. request로 article의 온전한 객체를 보내줍니다.")
-	public ResponseEntity<String> updateArticle(@RequestBody UserArticle article, HttpSession session) {
-		
-//		프론트에서 하자
-//		
-//		int reqWriterId = article.getWriterSeq();
-//		int dbWriterId = (int) session.getAttribute("user_seq");
-//		if (reqWriterId == dbWriterId) {
-//			article.setIsEdited(1);
-//			articleService.updateArticle(article);
-//			return new ResponseEntity<String>("Update Success", HttpStatus.ACCEPTED);
-//		} else {
-//			return new ResponseEntity<String>("Update Failed : Only the writer can update the article",
-//					HttpStatus.UNAUTHORIZED);
-//		}
-		
+	public ResponseEntity<String> updateArticle(@RequestBody UserArticle article) {
 		article.setIsEdited(1);
 		articleService.updateArticle(article);
 		return new ResponseEntity<String>("Update Success", HttpStatus.ACCEPTED);

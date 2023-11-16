@@ -28,6 +28,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			jwtUtil.isValid(token);
 			return true;
 		}
-		throw new Exception("유효하지 않은 접근");
+		throw new Exception("유효하지 않은 접근 -> 인터셉터가 ㅈㄹ임");
 	}
 }

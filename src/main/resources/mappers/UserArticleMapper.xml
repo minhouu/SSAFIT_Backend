@@ -47,10 +47,10 @@
 	</insert>
 
 	<!-- 게시물 수정 -->
-	<update id="updateArticle" parameterType="UserArticleComment">
+	<update id="updateArticle" parameterType="UserArticle">
 		UPDATE
 		user_article SET
-		content = #{content}, is_edited = #{isEdited} WHERE article_id =
+		title = #{title}, content = #{content}, is_edited = #{isEdited} WHERE article_id =
 		#{articleId}
 	</update>
 
