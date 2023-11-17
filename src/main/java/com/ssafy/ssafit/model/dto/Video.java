@@ -1,23 +1,42 @@
 package com.ssafy.ssafit.model.dto;
 
 public class Video {
-	private String id;
+	private String videoId;
+	private int writerSeq;
+	private String nickname;
 	private String title;
+	private String content;
 	private String part;
-	private String channelName;
-	private String url;
+	private String videoKey;
 	private String createdAt;
 	private int viewCnt;
+	private int isEdited;
 
 	public Video() {
 	}
 
-	public String getId() {
-		return id;
+	public String getVideoId() {
+		return videoId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setVideoId(String videoId) {
+		this.videoId = videoId;
+	}
+
+	public int getWriterSeq() {
+		return writerSeq;
+	}
+
+	public void setWriterSeq(int writerSeq) {
+		this.writerSeq = writerSeq;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getTitle() {
@@ -28,6 +47,14 @@ public class Video {
 		this.title = title;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public String getPart() {
 		return part;
 	}
@@ -36,20 +63,12 @@ public class Video {
 		this.part = part;
 	}
 
-	public String getChannelName() {
-		return channelName;
+	public String getVideoKey() {
+		return videoKey;
 	}
 
-	public void setChannelName(String channelName) {
-		this.channelName = channelName;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
+	public void setVideoKey(String videoKey) {
+		this.videoKey = videoKey;
 	}
 
 	public String getCreatedAt() {
@@ -68,10 +87,11 @@ public class Video {
 		this.viewCnt = viewCnt;
 	}
 
-	@Override
-	public String toString() {
-		return "Video [id=" + id + ", title=" + title + ", part=" + part + ", channelName=" + channelName + ", url="
-				+ url + ", createdAt=" + createdAt + ", viewCnt=" + viewCnt + "]";
+	public int getIsEdited() {
+		return isEdited;
 	}
 
+	public void setIsEdited(int isEdited) {
+		this.isEdited = isEdited;
+	}
 }

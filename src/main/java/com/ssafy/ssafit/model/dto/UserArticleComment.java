@@ -3,7 +3,8 @@ package com.ssafy.ssafit.model.dto;
 public class UserArticleComment {
 	private int commentId;
 	private int articleId;
-	private int userSeq;
+	private int writerSeq;
+	private String nickname;
 	private String createdAt;
 	private String content;
 	private int isEdited;
@@ -24,12 +25,20 @@ public class UserArticleComment {
 		this.articleId = articleId;
 	}
 
-	public int getUserSeq() {
-		return userSeq;
+	public int getWriterSeq() {
+		return writerSeq;
 	}
 
-	public void setUserSeq(int userSeq) {
-		this.userSeq = userSeq;
+	public void setWriterSeq(int writerSeq) {
+		this.writerSeq = writerSeq;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getCreatedAt() {
@@ -55,11 +64,4 @@ public class UserArticleComment {
 	public void setIsEdited(int isEdited) {
 		this.isEdited = isEdited;
 	}
-
-	@Override
-	public String toString() {
-		return "UserArticleComment [commentId=" + commentId + ", articleId=" + articleId + ", userSeq=" + userSeq
-				+ ", createdAt=" + createdAt + ", content=" + content + "]";
-	}
-
 }

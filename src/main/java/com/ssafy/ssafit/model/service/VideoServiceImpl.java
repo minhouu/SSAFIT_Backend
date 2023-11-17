@@ -16,7 +16,6 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public List<Video> getVideoList() {
-
 		return videoDao.selectAll();
 
 	}
@@ -26,5 +25,18 @@ public class VideoServiceImpl implements VideoService {
 		return videoDao.selectOne(id);
 	}
 
+	@Override
+	public void insertVideo(Video video) {
+		videoDao.insertOne(video);
+	}
 
+	@Override
+	public void updateVideo(Video video) {
+		videoDao.updateOne(video);
+	}
+
+	@Override
+	public void deleteVideo(int videoId) {
+		videoDao.deleteOne(videoId);
+	}
 }

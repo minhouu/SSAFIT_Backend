@@ -16,8 +16,9 @@
 
 	<!-- 특정 게시물의 댓글 반환 -->
 	<select id="selectAll" resultType="UserArticleComment">
-		SELECT * 
-		FROM user_article_comment
+		SELECT c.comment_id, c.article_id, c.created_at, c.content, c.is_edited, c.writer_seq, u.nickname  
+		FROM user_article_comment c
+		JOIN user u ON c.writer_seq = u.user_seq
 		WHERE article_id=#{articleId};
 	</select>
 
@@ -28,9 +29,9 @@
 	<insert id="insertComment" parameterType="UserArticleComment">
 		INSERT INTO
 		user_article_comment
-		(article_id, user_seq, content)
+		(article_id, writer_seq, content)
 		VALUES
-		(#{articleId}, #{userSeq}, #{content})
+		(#{articleId}, #{writerSeq}, #{content})
 	</insert>
 
 	<!-- comment update -->
