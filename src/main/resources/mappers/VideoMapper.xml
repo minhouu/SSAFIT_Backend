@@ -26,7 +26,7 @@
 	<select id="selectOne" resultType="Video">
 		SELECT v.video_id,
 		v.writer_seq, u.nickname, v.title, v.content, v.view_cnt,
-		v.created_at, v.is_edited, v.part, v.video_key
+		v.created_at, v.is_edited, v.part, v.video_key, v.url
 		FROM video v
 		JOIN user u
 		ON
@@ -38,9 +38,9 @@
 	<!-- 비디오 추가 -->
 	<insert id="insertOne" parameterType="Video">
 		INSERT INTO video
-		(writer_seq, title, content, part, video_key)
+		(writer_seq, title, content, part, video_key, url)
 		VALUES (#{writerSeq},
-		#{title}, #{content}, #{part}, #{videoKey})
+		#{title}, #{content}, #{part}, #{videoKey}, #{url})
 	</insert>
 
 	<update id="updateOne" parameterType="Video">
@@ -48,7 +48,7 @@
 		video SET
 		title =
 		#{title}, content = #{content}, video_key = #{videoKey}, is_edited =
-		#{isEdited}, part = #{part}
+		#{isEdited}, part = #{part}, url = #{url}
 		WHERE video_id = #{videoId}
 	</update>
 	

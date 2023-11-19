@@ -33,7 +33,7 @@ public class UserController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
-	
+
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "기존유저 확인", notes = "기존 유저가 존재하는지 확인합니다")
 	public ResponseEntity<String> isExist(@PathVariable String userId) {
@@ -43,14 +43,13 @@ public class UserController {
 		if (dbUser != null) {
 			result = "FAIL";
 			status = HttpStatus.BAD_REQUEST;
-		}
-		else {
+		} else {
 			result = "SUCCESS";
 			status = HttpStatus.OK;
 		}
 		return new ResponseEntity<String>(result, status);
 	}
-	
+
 	@PostMapping("/join")
 	@ApiOperation(value = "유저 추가", notes = "RequestData : id, password, nickname, userType")
 	public ResponseEntity<String> addUser(@RequestBody User user) {
@@ -61,30 +60,32 @@ public class UserController {
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "RequestData : id, password")
 	public ResponseEntity<Map<String, Object>> logIn(@RequestBody User user) {
-		// 로그인에 실패하면 userType == 0
-		// 로그인 성공시 userType == 1 or 2 or 3
-		int userType = userService.logIn(user);
+		User dbUser = userService.getUser(user.getId());
 		Map<String, Object> result = new HashMap<String, Object>();
 		HttpStatus status = null;
-		
+
+		// id가 틀려서 db에서 user를 가져올 수 없거나(null)
+		// dbUser와 user의 비밀번호가 서로 다를 때
+		if (dbUser == null || !dbUser.getPassword().equals(user.getPassword())) {
+			result.put("message", "FAIL");
+			status = HttpStatus.NOT_FOUND;
+			return new ResponseEntity<Map<String, Object>>(result, status);
+		}
+
+		// 로그인 성공시
 		try {
-			if (userType != 0) {
-				User dbUser = userService.getUser(user.getId());
-				result.put("message", "SUCCESS");
-				result.put("nickname", dbUser.getNickname());
-				result.put("userSeq", dbUser.getUserSeq());
-				result.put("access-token", jwtUtil.createToken("id", dbUser.getId()));
-				status = HttpStatus.ACCEPTED;
-			} else {
-				result.put("message", "FAIL");
-				status = HttpStatus.NO_CONTENT;
-			}
+			result.put("access-token", jwtUtil.createToken("id", dbUser.getId()));
+			result.put("message", "SUCCESS");
+			result.put("nickname", dbUser.getNickname());
+			result.put("userSeq", dbUser.getUserSeq());
+			status = HttpStatus.ACCEPTED;
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			result.put("message", "FAIL");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<Map<String,Object>>(result, status);
+		
+		return new ResponseEntity<Map<String, Object>>(result, status);
 	}
 
 	@GetMapping("/logout")

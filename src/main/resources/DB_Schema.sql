@@ -114,6 +114,7 @@ CREATE TABLE video(
     title VARCHAR(100) NOT NULL,
     content VARCHAR(10000) NOT NULL,
     part VARCHAR(100) NOT NULL,
+    url VARCHAR(200) NOT NULL,
     video_key VARCHAR(100) NOT NULL,
     created_at DATETIME DEFAULT NOW(),
     view_cnt INT DEFAULT 0,

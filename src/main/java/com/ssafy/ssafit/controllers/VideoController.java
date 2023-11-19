@@ -47,9 +47,10 @@ public class VideoController {
 		videoService.insertVideo(video);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping
 	@ApiOperation(value="비디오 업데이트", notes="비디오 정보를 업데이트합니다.")
 	public void updateVideo(@RequestBody Video video) {
+		System.out.println(video);
 		video.setIsEdited(1);
 		videoService.updateVideo(video);
 	}

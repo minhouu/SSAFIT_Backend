@@ -7,6 +7,7 @@ public class Video {
 	private String title;
 	private String content;
 	private String part;
+	private String url;
 	private String videoKey;
 	private String createdAt;
 	private int viewCnt;
@@ -61,6 +62,14 @@ public class Video {
 
 	public void setPart(String part) {
 		this.part = part;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getVideoKey() {
