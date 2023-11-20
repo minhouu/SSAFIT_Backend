@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,13 +38,28 @@ public class VideoController {
 	@GetMapping("/{id}")
 	@ApiOperation(value="비디오 가져오기", notes="비디오 1개를 가져옵니다.")
 	public Video getVideo(@PathVariable int id) {
-		System.out.println("가보자");
 		return videoService.getVideo(id);
 	}
 
 	@PostMapping
 	@ApiOperation(value="비디오 추가하기", notes="비디오를 1개 추가합니다.")
-	public String addVideo(@RequestBody Video video) {
-		return video.toString();
+	public void addVideo(@RequestBody Video video) {
+		videoService.insertVideo(video);
 	}
+	
+	@PutMapping
+	@ApiOperation(value="비디오 업데이트", notes="비디오 정보를 업데이트합니다.")
+	public void updateVideo(@RequestBody Video video) {
+		System.out.println(video);
+		video.setIsEdited(1);
+		videoService.updateVideo(video);
+	}
+	
+	@DeleteMapping("/{videoId}")
+	@ApiOperation(value="비디오 삭제", notes="비디오 정보를 삭제합니다.")
+	public void deleteVideo(@PathVariable int videoId) {
+		videoService.deleteVideo(videoId);
+	}
+	
+
 }

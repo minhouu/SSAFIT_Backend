@@ -24,7 +24,6 @@ public class JwtUtil {
 				.claim(key, value)
 				.signWith(SignatureAlgorithm.HS256, SECRET.getBytes("UTF-8"))
 				.compact();
-//		System.out.println(token);
 		return token;
 	}
 	

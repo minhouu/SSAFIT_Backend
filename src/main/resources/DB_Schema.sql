@@ -29,9 +29,8 @@ CREATE TABLE user_article (
 CREATE TABLE user_article_comment (
     comment_id int not null auto_increment primary key,
   	article_id int not null,
-    user_seq INT NOT NULL,
+    writer_seq INT NOT NULL,
     created_at DATETIME default current_timestamp,
-	  title varchar(100),
     content varchar(255),
     is_edited INT NOT NULL default 0,
     
@@ -41,7 +40,7 @@ CREATE TABLE user_article_comment (
         on delete cascade
         on update cascade,
     constraint fk_user_seq
-        foreign key (user_seq)
+        foreign key (writer_seq)
         references user (user_seq)
         on delete cascade
         on update cascade
@@ -61,9 +60,11 @@ FOREIGN KEY (trainner_seq) REFERENCES user(user_seq)
 
 CREATE TABLE exercise(
 ex_id INT NOT NULL UNIQUE PRIMARY KEY,
-ex_part VARCHAR(100) NOT NULL,
+ex_part VARCHAR(100) NOT NULL CHECK (ex_part IN ('leg', 'chest', 'back', 'shoulder', 'arm', 'abs', 'cardio')),
 ex_name VARCHAR(100) NOT NULL
 );
+
+CREATE INDEX idx_ex_part ON exercise(ex_part);
 
 # 하체 가승 등 어깨 팔 복근 유산소 순서
 # 미리 넣어야 하는 데이터임
@@ -107,19 +108,32 @@ FOREIGN KEY (ex_id) REFERENCES exercise(ex_id),
 FOREIGN KEY (record_id) REFERENCES record(record_id)
 );
 
+CREATE TABLE video(
+    video_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    writer_seq INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    content VARCHAR(10000) NOT NULL,
+    part VARCHAR(100) NOT NULL,
+    url VARCHAR(200) NOT NULL,
+    video_key VARCHAR(100) NOT NULL,
+    created_at DATETIME DEFAULT NOW(),
+    view_cnt INT DEFAULT 0,
+    is_edited INT NOT NULL DEFAULT 0,
+
+    FOREIGN KEY (writer_seq)
+        REFERENCES user (user_seq)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    FOREIGN KEY (part)
+        REFERENCES exercise (ex_part)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
 commit;
 
 
-
--- CREATE TABLE video(
--- id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
--- title VARCHAR(100) NOT NULL,
--- part VARCHAR(100) NOT NULL,
--- channel_name VARCHAR(100) NOT NULL,
--- url VARCHAR(100) NOT NULL,
--- created_at DATETIME default NOW(),
--- view_cnt INT DEFAULT 0
--- )ENGINE = InnoDB;
 
 -- CREATE TABLE followers (
 --     follower_id INT NOT NULL,

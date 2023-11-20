@@ -51,7 +51,7 @@ public class UserArticleCommentController {
 //		return commentService.getcomment(commentId);
 //	}
 
-	@PutMapping("/{commentId}")
+	@PutMapping
 	@ApiOperation(value = "댓글 업데이트", notes = "기존 댓글을 업데이트합니다. request로 comment의 온전한 객체를 보내줍니다.")
 	public ResponseEntity<String> updateComment(@RequestBody UserArticleComment comment) {
 		comment.setIsEdited(1);
