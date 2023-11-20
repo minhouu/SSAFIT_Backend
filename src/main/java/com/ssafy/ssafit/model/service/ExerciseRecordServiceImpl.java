@@ -34,8 +34,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		for(ExerciseDetail detail : details) {
 			detail.setRecordId(recordId);
 			recordDao.insertDetail(detail);
-		}
-		
+		}	
 	}
 	
 	@Override
