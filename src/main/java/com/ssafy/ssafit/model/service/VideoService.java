@@ -15,4 +15,5 @@ public interface VideoService {
 	
 	void deleteVideo(int videoId);
 
+	void increaseViewCnt(int videoId);
 }

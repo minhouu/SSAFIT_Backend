@@ -131,6 +131,35 @@ CREATE TABLE video(
         ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
+CREATE TABLE video_review (
+    review_id int not null auto_increment primary key,
+  	video_id int not null,
+    writer_seq INT NOT NULL,
+    created_at DATETIME default current_timestamp,
+    view_cnt INT DEFAULT 0,
+    title varchar(255) NOT NULL,
+    content varchar(255) NOT NULL,
+    is_edited INT NOT NULL default 0,
+
+	foreign key (video_id)
+	references video (video_id)
+	on delete cascade
+	on update cascade,
+
+	foreign key (writer_seq)
+	references user (user_seq)
+	on delete cascade
+	on update cascade
+)ENGINE = InnoDB;
+
+CREATE TABLE JJIM(
+user_seq INT NOT NULL,
+video_id INT NOT NULL,
+PRIMARY KEY (user_seq, video_id),
+FOREIGN KEY (user_seq) REFERENCES user(user_seq),
+FOREIGN KEY (video_id) REFERENCES video(video_id)
+)ENGINE = InnoDB;
+
 commit;
 
 
@@ -151,10 +180,3 @@ commit;
 --     FOREIGN KEY (following_id) REFERENCES user(user_seq)
 -- )ENGINE = InnoDB;
 
--- CREATE TABLE JJIM(
--- user_seq INT NOT NULL,
--- article_id INT NOT NULL,
--- PRIMARY KEY (user_seq, article_id),
--- FOREIGN KEY (user_seq) REFERENCES user(user_seq),
--- FOREIGN KEY (article_id) REFERENCES article(id)
--- )ENGINE = InnoDB;

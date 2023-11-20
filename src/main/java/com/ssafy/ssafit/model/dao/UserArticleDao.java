@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssafy.ssafit.model.dto.UserArticle;
 
 public interface UserArticleDao {
-	List<UserArticle> selectAll();
+	List<UserArticle> selectAll(int offset);
 
 	UserArticle selectOne(int articleId);
 	
@@ -16,4 +16,6 @@ public interface UserArticleDao {
 	void updateArticle(UserArticle article);
 
 	void deleteArticle(int articleId);
+	
+	int selectCount();
 }

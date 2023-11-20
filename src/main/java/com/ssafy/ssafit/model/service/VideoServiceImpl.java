@@ -39,4 +39,11 @@ public class VideoServiceImpl implements VideoService {
 	public void deleteVideo(int videoId) {
 		videoDao.deleteOne(videoId);
 	}
+
+	@Override
+	public void increaseViewCnt(int videoId) {
+		videoDao.increaseViewCnt(videoId);
+	}
+	
+	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssafy.ssafit.model.dto.UserArticle;
 
 public interface UserArticleService {
-	List<UserArticle> getArticleList();
+	List<UserArticle> getArticleList(int offset);
 	
 	UserArticle getArticle(int articleId);
 	
@@ -16,4 +16,6 @@ public interface UserArticleService {
 	void updateArticle(UserArticle article);
 
 	void deleteArticle(int articleId);
+	
+	int selectCount();
 }

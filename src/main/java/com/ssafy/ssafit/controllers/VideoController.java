@@ -61,5 +61,11 @@ public class VideoController {
 		videoService.deleteVideo(videoId);
 	}
 	
+	@GetMapping("/{videoId}/view-cnt")
+	@ApiOperation(value = "조회수 증가", notes = "본인 게시물이 아닌 경우 video의 viewCnt++")
+	public void viewCntUpdate(@PathVariable int videoId) {
+		videoService.increaseViewCnt(videoId);
+	}
+	
 
 }

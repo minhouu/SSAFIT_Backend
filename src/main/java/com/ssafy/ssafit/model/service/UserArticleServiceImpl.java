@@ -15,8 +15,8 @@ public class UserArticleServiceImpl implements UserArticleService {
 	private UserArticleDao articleDao;
 
 	@Override
-	public List<UserArticle> getArticleList() {
-		return articleDao.selectAll();
+	public List<UserArticle> getArticleList(int offset) {
+		return articleDao.selectAll(offset);
 	}
 
 	@Override
@@ -43,6 +43,11 @@ public class UserArticleServiceImpl implements UserArticleService {
 	public void deleteArticle(int articleId) {
 		articleDao.deleteArticle(articleId);
 
+	}
+
+	@Override
+	public int selectCount() {
+		return articleDao.selectCount();
 	}
 
 }

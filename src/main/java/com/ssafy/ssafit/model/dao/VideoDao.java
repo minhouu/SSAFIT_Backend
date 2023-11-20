@@ -14,4 +14,6 @@ public interface VideoDao {
 	public void updateOne(Video video);
 	
 	public void deleteOne(int videoId);
+	
+	void increaseViewCnt(int videoId);
 }
