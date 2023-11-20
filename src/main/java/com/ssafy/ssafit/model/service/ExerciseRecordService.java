@@ -3,6 +3,7 @@ package com.ssafy.ssafit.model.service;
 import java.util.List;
 
 import com.ssafy.ssafit.model.dto.ExerciseRecord;
+import com.ssafy.ssafit.model.dto.User;
 
 public interface ExerciseRecordService {
 
@@ -17,7 +18,8 @@ public interface ExerciseRecordService {
 	List<ExerciseRecord> selectPart(int userSeq, String exPart);
 	// 2.3 회원 신체 정보 조회
 	List<ExerciseRecord> selectWeight(int userSeq);
-	// 아직
+	// 2.4 트레이너 이름 조회
+	List<User> selectTrainner();
 	// 3. 운동 기록 수정
 	void updateRecord(ExerciseRecord exerciseRecord);
 	
