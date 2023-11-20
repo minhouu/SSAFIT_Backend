@@ -47,6 +47,16 @@ public class ExerciseRecordController {
 		return new ResponseEntity<String>("Record Added", HttpStatus.ACCEPTED);
 	}
 	
+	//미확인
+	@GetMapping
+	@ApiOperation(value = "해당 운동 종목 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")
+	public ResponseEntity<List<ExerciseRecord>> selectALlExercise() {
+		int userSeq = 1;
+		
+		List<ExerciseRecord> data = recordService.selectAll(userSeq);
+		return new ResponseEntity<List<ExerciseRecord>>(data, HttpStatus.OK);
+	}
+	
 	//완료
 	@GetMapping("/exerciseName/{exId}")
 	@ApiOperation(value = "해당 운동 종목 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")

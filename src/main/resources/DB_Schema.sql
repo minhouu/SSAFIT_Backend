@@ -78,21 +78,21 @@ VALUES
 (7, "leg", "legextension"), # 레그 익스텐션
 (8, "chest", "benchpress"), # 인클라인 포함, 덤벨, 바벨 통합
 (9, "chest", "dips"), # 딥스
-(11, "chest", "pushup"), # 푸쉬업
-(12, "back", "row"), # 덤벨, 바벨 로우
-(13, "back", "pullup"), # 턱걸이
-(14, "back", "letpulldown"), # 렛풀다운
-(15, "shoulder", "overheadpress"), # 렛풀다운
-(16, "shoulder", "frontraise"), # 프론트레이즈
-(17, "shoulder", "sidelateralraise"), # 사이드 레터럴 레이즈
-(18, "arm", "armcurl"), # 덤벨 컬 바벨 컬
-(19, "arm", "armkickback"), # 덤벨 킥 백
-(20, "arm", "tricepsextension"), # 트라이셉 익스텐션
-(21, "abs", "situp"), # 윗몸 일으키기
-(22, "abs", "crunch"), # 크런치
-(23, "abs", "regraise"), # 레그레이즈
-(24, "abs", "airbike"), # 하늘 자전거
-(25, "cardio", "cardio") # 모든 유산소 운동
+(10, "chest", "pushup"), # 푸쉬업
+(11, "back", "row"), # 덤벨, 바벨 로우
+(12, "back", "pullup"), # 턱걸이
+(13, "back", "letpulldown"), # 렛풀다운
+(14, "shoulder", "overheadpress"), # 오버헤드 프레스
+(15, "shoulder", "frontraise"), # 프론트레이즈
+(16, "shoulder", "sidelateralraise"), # 사이드 레터럴 레이즈
+(17, "arm", "armcurl"), # 덤벨 컬 바벨 컬
+(18, "arm", "armkickback"), # 덤벨 킥 백
+(19, "arm", "tricepsextension"), # 트라이셉 익스텐션
+(20, "abs", "situp"), # 윗몸 일으키기
+(21, "abs", "crunch"), # 크런치
+(22, "abs", "regraise"), # 레그레이즈
+(23, "abs", "airbike"), # 하늘 자전거
+(24, "cardio", "cardio") # 모든 유산소 운동
 ;
 
 
