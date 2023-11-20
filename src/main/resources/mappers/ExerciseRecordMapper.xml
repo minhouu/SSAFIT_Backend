@@ -37,7 +37,7 @@
 	</select>
 	
 	<select id="selectAll">
-	SELECT e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+	SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
 	FROM record r
 	JOIN detail d ON r.record_id = d.record_id
 	JOIN exercise e ON d.ex_id = e.ex_id
@@ -48,7 +48,7 @@
 	
 	<!-- 특정 운동 최근 10번의 세션 정보 가져오기 -->
 	<select id="selectExercise">
-		SELECT d.record_id, d.detail_id, e.ex_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
 		FROM record r
 		JOIN detail d ON r.record_id = d.record_id
 		JOIN exercise e ON d.ex_id = e.ex_id
@@ -67,9 +67,10 @@
 	
 	<!-- 부위에 일치하는 운동 가져오기 -->
 	<select id="selectPart">
-		SELECT d.record_id, d.detail_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
 		FROM detail d 
 		JOIN exercise e ON d.ex_id = e.ex_id
+		JOIN record r ON r.record_id = d.record_id
 		WHERE e.ex_part = #{exPart};
 	</select>
 	
