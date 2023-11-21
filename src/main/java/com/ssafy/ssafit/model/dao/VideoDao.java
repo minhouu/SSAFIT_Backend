@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssafy.ssafit.model.dto.Video;
 
 public interface VideoDao {
-	public List<Video> selectAll();
+	public List<Video> selectAll(int offset);
 	
 	public Video selectOne(int videoId);
 	
@@ -16,4 +16,6 @@ public interface VideoDao {
 	public void deleteOne(int videoId);
 	
 	void increaseViewCnt(int videoId);
+	
+	int selectCount();
 }

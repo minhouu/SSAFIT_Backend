@@ -48,25 +48,24 @@ public class UserArticleController {
 		int offset = (pageNum - 1) * 10;
 		return articleService.getArticleList(offset);
 	}
-	
-	@GetMapping("/count")
-	@ApiOperation(value="게시글 개수 가져오기")
-	public int getCount() {
-		return articleService.selectCount();
-	}
 
 	@GetMapping("/{articleId}")
 	@ApiOperation(value = "게시글 1개 가져오기", notes = "게시글 1개의 상세 정보를 가져옵니다.")
 	public UserArticle getArticle(@PathVariable int articleId) {
 		return articleService.getArticle(articleId);
 	}
-	
+
+	@GetMapping("/count")
+	@ApiOperation(value = "게시글 개수 가져오기")
+	public int getCount() {
+		return articleService.selectCount();
+	}
+
 	@GetMapping("/{articleId}/view-cnt")
 	@ApiOperation(value = "조회수 증가", notes = "본인 게시물이 아닌 경우 userArticle의 viewCnt++")
 	public void viewCntUpdate(@PathVariable int articleId) {
 		articleService.increaseViewCnt(articleId);
 	}
-	
 
 	@PutMapping("/{articleId}")
 	@ApiOperation(value = "게시글 업데이트", notes = "기존 게시글을 업데이트합니다. request로 article의 온전한 객체를 보내줍니다.")

@@ -11,7 +11,7 @@
 		/> </resultMap> -->
 
 	<!-- 전체 비디오 조회 -->
-	<select id="selectAll" resultType="Video">
+	<select id="selectAll" resultType="Video" parameterType="int">
 		SELECT v.video_id,
 		v.writer_seq, u.nickname, v.title, v.content, v.view_cnt,
 		v.created_at, v.is_edited, v.part, v.video_key
@@ -19,7 +19,12 @@
 		JOIN user u
 		ON
 		v.writer_seq = u.user_seq
-		ORDER BY created_at DESC
+		ORDER BY created_at DESC LIMIT 6 OFFSET #{offset}
+	</select>
+	
+	<!-- 게시물 개수 반환 -->
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) FROM video
 	</select>
 
 	<!-- 비디오 1개 조회 -->

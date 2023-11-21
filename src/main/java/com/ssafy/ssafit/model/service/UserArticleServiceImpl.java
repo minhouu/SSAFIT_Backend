@@ -10,7 +10,7 @@ import com.ssafy.ssafit.model.dto.UserArticle;
 
 @Service
 public class UserArticleServiceImpl implements UserArticleService {
-	
+
 	@Autowired
 	private UserArticleDao articleDao;
 
@@ -28,7 +28,7 @@ public class UserArticleServiceImpl implements UserArticleService {
 	public void increaseViewCnt(int articleId) {
 		articleDao.increaseViewCnt(articleId);
 	}
-	
+
 	@Override
 	public void addArticle(UserArticle article) {
 		articleDao.insertArticle(article);
