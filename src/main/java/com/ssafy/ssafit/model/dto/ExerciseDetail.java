@@ -9,7 +9,7 @@ public class ExerciseDetail {
 	private String exName; // 운동 이름
 	private String exPart; // 운동 부위
 	private int setNum; // 세트 번호 (ex) 1~5세트 같은 느낌)
-	private int weight;// 운동 볼륨
+	private float weight;// 운동 볼륨
 	private int reps;// 운동 횟수	
 	
 	public ExerciseDetail() {
@@ -60,10 +60,10 @@ public class ExerciseDetail {
 	public void setSetNum(int setNum) {
 		this.setNum = setNum;
 	}
-	public int getWeight() {
+	public float getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 	public int getReps() {

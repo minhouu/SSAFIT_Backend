@@ -61,6 +61,12 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		
 		return recordDao.selectWeight(userSeq);
 	}
+
+	@Override
+	public List<ExerciseDetail> selectRecord(int recordId) {
+		
+		return recordDao.selectRecord(recordId);
+	}
 	
 	@Override
 	public void updateRecord(ExerciseRecord exerciseRecord) {
@@ -85,6 +91,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		// TODO Auto-generated method stub
 		return recordDao.selectTrainner();
 	}
+
 
 
 

@@ -26,7 +26,8 @@ public interface ExerciseRecordDao {
 	List<ExerciseRecord> selectWeight(int userSeq);
 	// 2.4 트레이너의 이름을 조회
 	List<User> selectTrainner();
-	
+	// 2.5 recordId로 해당 record의 모든 detail 조회
+	List<ExerciseDetail> selectRecord(int recordId);
 	// recordId를 조회
 	int selectRecordId(int userSeq);
 	
