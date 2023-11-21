@@ -8,9 +8,9 @@
 23-11-15 ~ 23-11-24
 
 # 개발 환경
-JAVA 8
-Spring 2.7 (with MyBatis)
-MySql
+JAVA 8 <br>
+Spring 2.7 (with MyBatis & Swagger) <br>
+MySql <br>
 
 # WITH
 @[Jong-Youl](https://github.com/Jong-Youl)
