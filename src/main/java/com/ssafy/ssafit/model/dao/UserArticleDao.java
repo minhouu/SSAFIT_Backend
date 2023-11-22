@@ -6,6 +6,9 @@ import com.ssafy.ssafit.model.dto.UserArticle;
 
 public interface UserArticleDao {
 	List<UserArticle> selectAll(int offset);
+	
+	List<UserArticle> selectBySearch(int offset, String searchType, String searchKeyword);
+	
 
 	UserArticle selectOne(int articleId);
 	
@@ -17,5 +20,5 @@ public interface UserArticleDao {
 
 	void deleteArticle(int articleId);
 	
-	int selectCount();
+	int selectCount(String searchKeyword);
 }

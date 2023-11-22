@@ -18,6 +18,11 @@ public class UserArticleServiceImpl implements UserArticleService {
 	public List<UserArticle> getArticleList(int offset) {
 		return articleDao.selectAll(offset);
 	}
+	
+	@Override
+	public List<UserArticle> getArticleListBySearch(int offset, String searchType, String searchKeyword) {
+		return articleDao.selectBySearch(offset, searchType, searchKeyword);
+	}
 
 	@Override
 	public UserArticle getArticle(int articleId) {
@@ -46,8 +51,7 @@ public class UserArticleServiceImpl implements UserArticleService {
 	}
 
 	@Override
-	public int selectCount() {
-		return articleDao.selectCount();
+	public int selectCount(String searchKeyword) {
+		return articleDao.selectCount(searchKeyword);
 	}
-
 }

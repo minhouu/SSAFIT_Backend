@@ -43,10 +43,17 @@ public class UserArticleController {
 
 	@GetMapping
 	@ApiOperation(value = "게시글 전체 가져오기", notes = "게시글 전체를 가져옵니다. \n\n * URL Parameter { article-id : articleId }\nRequest : none\nResponse : List<UserArticle>, UserArticle 중 content 제외한 데이터")
-	public List<UserArticle> getArticles(@RequestParam("page") int pageNum) {
-//		System.out.println("get articles");
+	public List<UserArticle> getArticleList(@RequestParam("page") int pageNum) {
 		int offset = (pageNum - 1) * 10;
 		return articleService.getArticleList(offset);
+	}
+
+	@GetMapping("search")
+	@ApiOperation(value = "게시물 제목 검색")
+	public List<UserArticle> getArticleListBySearch(@RequestParam("page") int pageNum,
+			@RequestParam("type") String searchType, @RequestParam("keyword") String searchKeyword) {
+		int offset = (pageNum - 1) * 10;
+		return articleService.getArticleListBySearch(offset, searchType, searchKeyword);
 	}
 
 	@GetMapping("/{articleId}")
@@ -57,8 +64,8 @@ public class UserArticleController {
 
 	@GetMapping("/count")
 	@ApiOperation(value = "게시글 개수 가져오기")
-	public int getCount() {
-		return articleService.selectCount();
+	public int getCount(@RequestParam(required = false, name = "keyword") String searchKeyword) {
+		return articleService.selectCount(searchKeyword);
 	}
 
 	@GetMapping("/{articleId}/view-cnt")

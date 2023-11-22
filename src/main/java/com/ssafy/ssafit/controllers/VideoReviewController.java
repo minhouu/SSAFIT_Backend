@@ -33,14 +33,14 @@ public class VideoReviewController {
 	private VideoReviewService reviewService;
 
 	@PostMapping
-	@ApiOperation(value = "리뷰 추가", notes = "새로운 댓글을 추가합니다.\nParameter { video-id : videoId }")
+	@ApiOperation(value = "리뷰 추가", notes = "새로운 리뷰를 추가합니다.\nParameter { video-id : videoId }")
 	public ResponseEntity<String> addReview(@RequestBody VideoReview review) {
 		reviewService.addReview(review);
 		return new ResponseEntity<String>("Comment Added", HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping
-	@ApiOperation(value = "리뷰 전체 가져오기", notes = "댓글 전체를 가져옵니다.\\nParameter { video-id : videoId }")
+	@ApiOperation(value = "리뷰 전체 가져오기", notes = "리뷰 전체를 가져옵니다.\\nParameter { video-id : videoId }")
 	public ResponseEntity<List<VideoReview>> getReviews(@RequestParam("video-id") int videoId) {
 		List<VideoReview> data = reviewService.getReviewList(videoId);
 		return new ResponseEntity<List<VideoReview>>(data, HttpStatus.OK);
