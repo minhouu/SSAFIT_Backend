@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.ssafit.model.dto.UserArticle;
@@ -42,9 +43,10 @@ public class UserArticleController {
 
 	@GetMapping
 	@ApiOperation(value = "게시글 전체 가져오기", notes = "게시글 전체를 가져옵니다. \n\n * URL Parameter { article-id : articleId }\nRequest : none\nResponse : List<UserArticle>, UserArticle 중 content 제외한 데이터")
-	public List<UserArticle> getArticles() {
+	public List<UserArticle> getArticles(@RequestParam("page") int pageNum) {
 //		System.out.println("get articles");
-		return articleService.getArticleList();
+		int offset = (pageNum - 1) * 10;
+		return articleService.getArticleList(offset);
 	}
 
 	@GetMapping("/{articleId}")
@@ -52,13 +54,18 @@ public class UserArticleController {
 	public UserArticle getArticle(@PathVariable int articleId) {
 		return articleService.getArticle(articleId);
 	}
-	
+
+	@GetMapping("/count")
+	@ApiOperation(value = "게시글 개수 가져오기")
+	public int getCount() {
+		return articleService.selectCount();
+	}
+
 	@GetMapping("/{articleId}/view-cnt")
 	@ApiOperation(value = "조회수 증가", notes = "본인 게시물이 아닌 경우 userArticle의 viewCnt++")
 	public void viewCntUpdate(@PathVariable int articleId) {
 		articleService.increaseViewCnt(articleId);
 	}
-	
 
 	@PutMapping("/{articleId}")
 	@ApiOperation(value = "게시글 업데이트", notes = "기존 게시글을 업데이트합니다. request로 article의 온전한 객체를 보내줍니다.")

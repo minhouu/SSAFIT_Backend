@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssafy.ssafit.model.dto.Video;
 
 public interface VideoService {
-	List<Video> getVideoList();
+	List<Video> getVideoList(int offset);
 
 	Video getVideo(int id);
 	
@@ -15,4 +15,7 @@ public interface VideoService {
 	
 	void deleteVideo(int videoId);
 
+	void increaseViewCnt(int videoId);
+	
+	int selectCount();
 }

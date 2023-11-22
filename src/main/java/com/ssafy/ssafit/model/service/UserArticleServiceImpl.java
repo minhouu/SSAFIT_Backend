@@ -10,13 +10,13 @@ import com.ssafy.ssafit.model.dto.UserArticle;
 
 @Service
 public class UserArticleServiceImpl implements UserArticleService {
-	
+
 	@Autowired
 	private UserArticleDao articleDao;
 
 	@Override
-	public List<UserArticle> getArticleList() {
-		return articleDao.selectAll();
+	public List<UserArticle> getArticleList(int offset) {
+		return articleDao.selectAll(offset);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class UserArticleServiceImpl implements UserArticleService {
 	public void increaseViewCnt(int articleId) {
 		articleDao.increaseViewCnt(articleId);
 	}
-	
+
 	@Override
 	public void addArticle(UserArticle article) {
 		articleDao.insertArticle(article);
@@ -43,6 +43,11 @@ public class UserArticleServiceImpl implements UserArticleService {
 	public void deleteArticle(int articleId) {
 		articleDao.deleteArticle(articleId);
 
+	}
+
+	@Override
+	public int selectCount() {
+		return articleDao.selectCount();
 	}
 
 }

@@ -15,9 +15,8 @@ public class VideoServiceImpl implements VideoService {
 	private VideoDao videoDao;
 
 	@Override
-	public List<Video> getVideoList() {
-		return videoDao.selectAll();
-
+	public List<Video> getVideoList(int offset) {
+		return videoDao.selectAll(offset);
 	}
 
 	@Override
@@ -39,4 +38,15 @@ public class VideoServiceImpl implements VideoService {
 	public void deleteVideo(int videoId) {
 		videoDao.deleteOne(videoId);
 	}
+
+	@Override
+	public void increaseViewCnt(int videoId) {
+		videoDao.increaseViewCnt(videoId);
+	}
+
+	@Override
+	public int selectCount() {
+		return videoDao.selectCount();
+	}
+
 }
