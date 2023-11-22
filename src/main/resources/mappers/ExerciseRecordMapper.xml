@@ -44,6 +44,7 @@
 		ORDER BY r.record_date DESC;
 	</select>
 	
+	<!-- 모든 운동  -->
 	<select id="selectRecord">
 		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, e.ex_name, e.ex_part, d.set_num, d.weight, d.reps
 		FROM detail d
@@ -68,7 +69,7 @@
 		)
 		AND
 		e.ex_id = #{exId}
-		ORDER BY d.detail_id
+		ORDER BY r.record_date DESC, d.detail_id
 		LIMIT 10;
 		;
 	</select>
