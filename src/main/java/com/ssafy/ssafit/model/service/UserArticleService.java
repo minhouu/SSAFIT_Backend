@@ -17,5 +17,5 @@ public interface UserArticleService {
 
 	void deleteArticle(int articleId);
 	
-	int selectCount();
+	int selectCount(String searchKeyword);
 }

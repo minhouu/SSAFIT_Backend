@@ -17,5 +17,5 @@ public interface UserArticleDao {
 
 	void deleteArticle(int articleId);
 	
-	int selectCount();
+	int selectCount(String searchKeyword);
 }
