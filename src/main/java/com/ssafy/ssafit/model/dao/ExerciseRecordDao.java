@@ -30,6 +30,8 @@ public interface ExerciseRecordDao {
 	List<ExerciseDetail> selectRecord(int recordId);
 	// recordId를 조회
 	int selectRecordId(int userSeq);
+	// exId에 일치하는 운동 이름 조회
+	String selectExerciseName(int exId);
 	
 	// 3. 운동 기록 수정
 	void updateRecord(ExerciseRecord exerciseRecord);

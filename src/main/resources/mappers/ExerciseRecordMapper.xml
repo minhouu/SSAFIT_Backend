@@ -17,7 +17,6 @@
 		INSERT INTO detail (record_id, ex_id, set_num, weight, reps)
 		VALUES
 		(#{recordId}, #{exId}, #{setNum}, #{weight}, #{reps});
-	
 	</insert>
 	
 	<!-- read -->
@@ -51,7 +50,7 @@
 		JOIN exercise e ON d.ex_id = e.ex_id
 		JOIN record r ON r.record_id = d.record_id
 		WHERE r.record_id = #{record_id}
-		ORDER BY r.record_date;
+		ORDER BY r.record_date DESC;
 	</select>
 	
 	
@@ -80,8 +79,16 @@
 		FROM detail d 
 		JOIN exercise e ON d.ex_id = e.ex_id
 		JOIN record r ON r.record_id = d.record_id
-		WHERE e.ex_part = #{exPart}
-		ORDER BY r.record_date DESC;
+		WHERE e.ex_part = #{exPart} AND r.user_seq = #{userSeq}
+		ORDER BY r.record_date DESC
+		LIMIT 30;
+	</select>
+	
+	<!-- exId에 일치하는 운동 이름 가져오기 -->
+	<select id="selectExerciseName">
+		SELECT ex_name
+		FROM exercise
+		WHERE ex_id = #{exId};
 	</select>
 	
 	<!-- 회원의 신체정보 들고오기 -->

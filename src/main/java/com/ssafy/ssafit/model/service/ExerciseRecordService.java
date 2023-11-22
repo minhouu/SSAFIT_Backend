@@ -23,6 +23,9 @@ public interface ExerciseRecordService {
 	List<User> selectTrainner();
 	// 2.5 recordId로 해당 record의 모든 detail 조회
 	List<ExerciseDetail> selectRecord(int recordId);
+	// 2.6 exId에 일치하는 운동 이름 조회
+	String selectExerciseName(int exId);
+	
 	// 3. 운동 기록 수정
 	void updateRecord(ExerciseRecord exerciseRecord);
 	

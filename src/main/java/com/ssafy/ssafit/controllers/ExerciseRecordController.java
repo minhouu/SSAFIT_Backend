@@ -97,7 +97,12 @@ public class ExerciseRecordController {
 		return new ResponseEntity<List<ExerciseRecord>>(data, HttpStatus.OK);
 	}
 	
-	
+	@GetMapping("/exercise/{exId}")
+	@ApiOperation(value = "해당 id 운동 이름 가져오기", notes = "")
+	public ResponseEntity<String> selectExerciseName(@PathVariable("exId") int exId) {
+		String exName = recordService.selectExerciseName(exId);
+		return new ResponseEntity<String>(exName, HttpStatus.OK);
+	}
 	
 //	@GetMapping("/{commentId}")
 //	@ApiOperation(value="댓글 1개 가져오기", notes="댓글 1개를 가져옵니다.")

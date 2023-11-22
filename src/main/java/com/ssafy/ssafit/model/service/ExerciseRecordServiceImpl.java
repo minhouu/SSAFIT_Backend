@@ -69,6 +69,11 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 	}
 	
 	@Override
+	public String selectExerciseName(int exId) {
+		return recordDao.selectExerciseName(exId);
+	}
+
+	@Override
 	public void updateRecord(ExerciseRecord exerciseRecord) {
 		
 		recordDao.updateRecord(exerciseRecord);
@@ -91,6 +96,7 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		// TODO Auto-generated method stub
 		return recordDao.selectTrainner();
 	}
+
 
 
 
