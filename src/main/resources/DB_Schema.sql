@@ -60,7 +60,7 @@ FOREIGN KEY (trainner_seq) REFERENCES user(user_seq)
 
 CREATE TABLE exercise(
 ex_id INT NOT NULL UNIQUE PRIMARY KEY,
-ex_part VARCHAR(100) NOT NULL CHECK (ex_part IN ('leg', 'chest', 'back', 'shoulder', 'arm', 'abs', 'cardio')),
+ex_part VARCHAR(100) NOT NULL CHECK (ex_part IN ('leg', 'chest', 'back', 'shoulder', 'arm', 'abs')),
 ex_name VARCHAR(100) NOT NULL
 );
 
@@ -92,8 +92,7 @@ VALUES
 (20, "abs", "situp"), # 윗몸 일으키기
 (21, "abs", "crunch"), # 크런치
 (22, "abs", "regraise"), # 레그레이즈
-(23, "abs", "airbike"), # 하늘 자전거
-(24, "cardio", "cardio") # 모든 유산소 운동
+(23, "abs", "airbike") # 하늘 자전거
 ;
 
 
