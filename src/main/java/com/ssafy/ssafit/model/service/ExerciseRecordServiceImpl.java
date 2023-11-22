@@ -2,16 +2,13 @@ package com.ssafy.ssafit.model.service;
 
 import java.util.List;
 
-import javax.xml.soap.Detail;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafit.model.dao.ExerciseRecordDao;
-import com.ssafy.ssafit.model.dao.UserArticleCommentDao;
 import com.ssafy.ssafit.model.dto.ExerciseDetail;
 import com.ssafy.ssafit.model.dto.ExerciseRecord;
-import com.ssafy.ssafit.model.dto.UserArticleComment;
+import com.ssafy.ssafit.model.dto.User;
 
 @Service
 public class ExerciseRecordServiceImpl implements ExerciseRecordService {
@@ -31,6 +28,8 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		// detail Table에 넣기
 		List<ExerciseDetail> details = exerciseRecord.getDetails();
 		
+		System.out.println(exerciseRecord.toString());
+		
 		for(ExerciseDetail detail : details) {
 			detail.setRecordId(recordId);
 			recordDao.insertDetail(detail);
@@ -46,19 +45,27 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 	@Override
 	public List<ExerciseRecord> selectExercise(int userSeq, int exId) {
 		
-		return recordDao.selectExercise(userSeq);
+		return recordDao.selectExercise(userSeq, exId);
 	}
 
 	@Override
-	public List<ExerciseRecord> selectPart(int userSeq, String part) {
+	public List<ExerciseRecord> selectPart(int userSeq, String exPart) {
 		
-		return recordDao.selectPart(userSeq, part);
+		return recordDao.selectPart(userSeq, exPart);
 	}
 
+	
+	
 	@Override
 	public List<ExerciseRecord> selectWeight(int userSeq) {
 		
 		return recordDao.selectWeight(userSeq);
+	}
+
+	@Override
+	public List<ExerciseDetail> selectRecord(int recordId) {
+		
+		return recordDao.selectRecord(recordId);
 	}
 	
 	@Override
@@ -78,6 +85,14 @@ public class ExerciseRecordServiceImpl implements ExerciseRecordService {
 		
 		recordDao.deleteRecord(userSeq, detailId);
 	}
+
+	@Override
+	public List<User> selectTrainner() {
+		// TODO Auto-generated method stub
+		return recordDao.selectTrainner();
+	}
+
+
 
 
 }
