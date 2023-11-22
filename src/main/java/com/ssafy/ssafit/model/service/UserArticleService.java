@@ -7,6 +7,8 @@ import com.ssafy.ssafit.model.dto.UserArticle;
 public interface UserArticleService {
 	List<UserArticle> getArticleList(int offset);
 	
+	List<UserArticle> getArticleListBySearch(int offset, String searchType, String searchKeyword);
+	
 	UserArticle getArticle(int articleId);
 	
 	void increaseViewCnt(int articleId);

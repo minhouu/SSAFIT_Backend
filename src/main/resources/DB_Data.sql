@@ -235,10 +235,6 @@ values
 (2, 1, "과아아아앙우"),
 (3, 1, "ㄹㅇㅋㅋㅋ");
 
-insert into user_article_comment (article_id, writer_seq, content)
-values 
-(219, 2, "테스트용 댓글");
-
 INSERT INTO video (writer_seq, title, content, part, url, video_key)
 VALUES
 ('12', '김성환 가슴운동', '테스트입니다', 'chest', 'https://www.youtube.com/watch?v=90ZmjAb7dvE&t=4s&ab_channel=%EA%B9%80%EC%84%B1%ED%99%98%ED%97%AC%EC%8A%A4%EC%9C%A0%ED%8A%9C%EB%B8%8C', '90ZmjAb7dvE'),

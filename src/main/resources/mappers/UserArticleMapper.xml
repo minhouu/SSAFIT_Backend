@@ -23,13 +23,40 @@
 		FROM user_article ua
 		JOIN user u ON
 		ua.writer_seq = u.user_seq
+		ORDER BY created_at DESC LIMIT 10 OFFSET
+		#{offset}
+	</select>
+
+	<select id="selectBySearch">
+		SELECT ua.article_id,
+		ua.writer_seq, u.nickname, ua.title, ua.content,
+		ua.view_cnt,
+		ua.created_at, ua.is_edited
+		FROM user_article ua
+		JOIN user u
+		ON
+		ua.writer_seq = u.user_seq
+		WHERE
+		<choose>
+			<when test="searchType == 'writer'">
+				u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'title'">
+				ua.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				ua.content LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+		</choose>
 		ORDER BY created_at DESC LIMIT 10 OFFSET #{offset}
 	</select>
-	
+
 	<!-- 게시물 개수 반환 -->
 	<select id="selectCount" resultType="int">
-		SELECT COUNT(*) FROM user_article ua
-		WHERE ua.title LIKE CONCAT('%', COALESCE(#{searchKeyword}, ''), '%') 
+		SELECT COUNT(*) FROM
+		user_article ua
+		WHERE ua.title LIKE CONCAT('%',
+		COALESCE(#{searchKeyword}, ''), '%')
 	</select>
 
 	<!-- 게시물 1개 상세 정보 반환 -->
@@ -69,10 +96,11 @@
 		user_article
 		WHERE article_id = #{articleId}
 	</delete>
-	
+
 	<update id="increaseViewCnt">
 		UPDATE user_article
 		SET view_cnt = view_cnt + 1
-		WHERE article_id = #{articleId};
+		WHERE
+		article_id = #{articleId};
 	</update>
 </mapper>
