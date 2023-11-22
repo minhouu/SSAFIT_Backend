@@ -49,7 +49,7 @@ public class VideoController {
 	}
 
 	@GetMapping("/count")
-	@ApiOperation(value = "게시글 개수 가져오기")
+	@ApiOperation(value = "비디오 개수 가져오기")
 	public int getCount() {
 		return videoService.selectCount();
 	}
