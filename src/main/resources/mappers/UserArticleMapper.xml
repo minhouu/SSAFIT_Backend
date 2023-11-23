@@ -27,6 +27,7 @@
 		#{offset}
 	</select>
 
+	<!-- 게시물 검색 결과 반환 -->
 	<select id="selectBySearch">
 		SELECT ua.article_id,
 		ua.writer_seq, u.nickname, ua.title, ua.content,
@@ -36,16 +37,15 @@
 		JOIN user u
 		ON
 		ua.writer_seq = u.user_seq
-		WHERE
 		<choose>
 			<when test="searchType == 'writer'">
-				u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+				WHERE u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
 			</when>
 			<when test="searchType == 'title'">
-				ua.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				WHERE ua.title LIKE CONCAT('%', #{searchKeyword}, '%')
 			</when>
 			<when test="searchType == 'content'">
-				ua.content LIKE CONCAT('%', #{searchKeyword}, '%')
+				WHERE ua.content LIKE CONCAT('%', #{searchKeyword}, '%')
 			</when>
 		</choose>
 		ORDER BY created_at DESC LIMIT 10 OFFSET #{offset}
@@ -55,8 +55,19 @@
 	<select id="selectCount" resultType="int">
 		SELECT COUNT(*) FROM
 		user_article ua
-		WHERE ua.title LIKE CONCAT('%',
-		COALESCE(#{searchKeyword}, ''), '%')
+		JOIN user u ON ua.writer_seq =
+		u.user_seq
+		<choose>
+			<when test="searchType == 'writer'">
+				WHERE u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'title'">
+				WHERE ua.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				WHERE ua.content LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+		</choose>
 	</select>
 
 	<!-- 게시물 1개 상세 정보 반환 -->

@@ -49,7 +49,7 @@ public class UserArticleController {
 	}
 
 	@GetMapping("search")
-	@ApiOperation(value = "게시물 제목 검색")
+	@ApiOperation(value = "게시물 검색")
 	public List<UserArticle> getArticleListBySearch(@RequestParam("page") int pageNum,
 			@RequestParam("type") String searchType, @RequestParam("keyword") String searchKeyword) {
 		int offset = (pageNum - 1) * 10;
@@ -64,8 +64,9 @@ public class UserArticleController {
 
 	@GetMapping("/count")
 	@ApiOperation(value = "게시글 개수 가져오기")
-	public int getCount(@RequestParam(required = false, name = "keyword") String searchKeyword) {
-		return articleService.selectCount(searchKeyword);
+	public int getCount(@RequestParam(required = false, name = "type") String searchType,
+			@RequestParam(required = false, name = "keyword") String searchKeyword) {
+		return articleService.selectCount(searchType, searchKeyword);
 	}
 
 	@GetMapping("/{articleId}/view-cnt")

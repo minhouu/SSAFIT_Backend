@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafit.model.dao.VideoDao;
+import com.ssafy.ssafit.model.dto.UserArticle;
 import com.ssafy.ssafit.model.dto.Video;
 
 @Service
@@ -17,6 +18,11 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<Video> getVideoList(int offset) {
 		return videoDao.selectAll(offset);
+	}
+	
+	@Override
+	public List<Video> getVideoListBySearch(int offset, String searchType, String searchKeyword) {
+		return videoDao.selectBySearch(offset, searchType, searchKeyword);
 	}
 
 	@Override
@@ -45,8 +51,9 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public int selectCount() {
-		return videoDao.selectCount();
+	public int selectCount(String searchType, String searchKeyword) {
+		return videoDao.selectCount(searchType, searchKeyword);
 	}
 
+	
 }

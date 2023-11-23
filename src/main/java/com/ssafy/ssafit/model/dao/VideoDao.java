@@ -7,6 +7,8 @@ import com.ssafy.ssafit.model.dto.Video;
 public interface VideoDao {
 	public List<Video> selectAll(int offset);
 	
+	List<Video> selectBySearch(int offset, String searchType, String searchKeyword);
+	
 	public Video selectOne(int videoId);
 	
 	public void insertOne(Video video);
@@ -17,5 +19,5 @@ public interface VideoDao {
 	
 	void increaseViewCnt(int videoId);
 	
-	int selectCount();
+	int selectCount(String searchType, String searchKeyword);
 }

@@ -51,7 +51,7 @@ public class UserArticleServiceImpl implements UserArticleService {
 	}
 
 	@Override
-	public int selectCount(String searchKeyword) {
-		return articleDao.selectCount(searchKeyword);
+	public int selectCount(String searchType, String searchKeyword) {
+		return articleDao.selectCount(searchType, searchKeyword);
 	}
 }

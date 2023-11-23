@@ -5,7 +5,7 @@ USE ssafit;
 CREATE TABLE user(
 user_seq INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id VARCHAR(100) NOT NULL UNIQUE,
-password VARCHAR(100) NOT NULL,
+password VARCHAR(200) NOT NULL,
 nickname VARCHAR(100) NOT NULL,
 user_type INT NOT NULL CHECK (user_type >= 1 AND user_type <= 3)
 )ENGINE = InnoDB;
@@ -94,7 +94,6 @@ VALUES
 (22, "abs", "regraise"), # 레그레이즈
 (23, "abs", "airbike") # 하늘 자전거
 ;
-
 
 CREATE TABLE detail(
 detail_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
