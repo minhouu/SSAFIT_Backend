@@ -9,7 +9,6 @@ public interface UserArticleDao {
 	
 	List<UserArticle> selectBySearch(int offset, String searchType, String searchKeyword);
 	
-
 	UserArticle selectOne(int articleId);
 	
 	void increaseViewCnt(int articleId);
@@ -20,5 +19,5 @@ public interface UserArticleDao {
 
 	void deleteArticle(int articleId);
 	
-	int selectCount(String searchKeyword);
+	int selectCount(String searchType, String searchKeyword);
 }

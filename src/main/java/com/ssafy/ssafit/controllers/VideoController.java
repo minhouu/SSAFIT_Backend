@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.ssafit.model.dto.UserArticle;
 import com.ssafy.ssafit.model.dto.Video;
 import com.ssafy.ssafit.model.service.VideoService;
 
@@ -42,6 +43,15 @@ public class VideoController {
 		return videoService.getVideoList(offset);
 	}
 
+	@GetMapping("search")
+	@ApiOperation(value = "게시물 검색")
+	public List<Video> getArticleListBySearch(@RequestParam("page") int pageNum,
+			@RequestParam("type") String searchType, @RequestParam("keyword") String searchKeyword) {
+		int offset = (pageNum - 1) * 10;
+		return videoService.getVideoListBySearch(offset, searchType, searchKeyword);
+	}
+
+	
 	@GetMapping("/{id}")
 	@ApiOperation(value = "비디오 가져오기", notes = "비디오 1개를 가져옵니다.")
 	public Video getVideo(@PathVariable int id) {
@@ -50,8 +60,9 @@ public class VideoController {
 
 	@GetMapping("/count")
 	@ApiOperation(value = "비디오 개수 가져오기")
-	public int getCount() {
-		return videoService.selectCount();
+	public int getCount(@RequestParam(required = false, name = "type") String searchType,
+			@RequestParam(required = false, name = "keyword") String searchKeyword) {
+		return videoService.selectCount(searchType, searchKeyword);
 	}
 
 	@GetMapping("/{videoId}/view-cnt")

@@ -6,6 +6,8 @@ import com.ssafy.ssafit.model.dto.Video;
 
 public interface VideoService {
 	List<Video> getVideoList(int offset);
+	
+	List<Video> getVideoListBySearch(int offset, String searchType, String searchKeyword);
 
 	Video getVideo(int id);
 	
@@ -17,5 +19,5 @@ public interface VideoService {
 
 	void increaseViewCnt(int videoId);
 	
-	int selectCount();
+	int selectCount(String searchType, String searchKeyword);
 }
