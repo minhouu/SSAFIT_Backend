@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 아직 구상중 -->
+<mapper namespace="com.ssafy.ssafit.model.dao.ExerciseRecordDao">
+
+	<!-- create -->
+	<insert id="insertRecord" parameterType="ExerciseRecord">
+		INSERT INTO record (user_seq, trainner_seq, body_weight, body_fat_mass, skeletal_muscle_mass)
+		VALUES
+		(#{userSeq}, #{trainnerSeq}, #{bodyWeight}, #{bodyFatMass}, #{skeletalMuscleMass});
+	</insert>
+	
+	<insert id="insertDetail" parameterType="ExerciseDetail">
+		INSERT INTO detail (record_id, ex_id, set_num, weight, reps)
+		VALUES
+		(#{recordId}, #{exId}, #{setNum}, #{weight}, #{reps});
+	</insert>
+	
+	<!-- read -->
+	<!-- 트레이너의 이름을 가져오는 메소드 -->
+	<select id="selectTrainner">
+		SELECT user_seq, nickname
+		FROM user
+		WHERE user_type = 2;
+	</select>
+	
+	<select id="selectRecordId">
+		SELECT record_id
+		FROM record
+		WHERE  user_seq = #{userSeq}
+		ORDER BY record_date DESC
+		LIMIT 1;
+	</select>
+	
+	<select id="selectAll">
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, r.record_id
+		FROM record r JOIN detail d ON r.record_id = d.record_id
+		WHERE r.user_seq = #{userSeq}
+		GROUP BY r.record_id
+		ORDER BY r.record_date DESC;
+	</select>
+	
+	<!-- 모든 운동  -->
+	<select id="selectRecord">
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, e.ex_name, e.ex_part, d.set_num, d.weight, d.reps
+		FROM detail d
+		JOIN exercise e ON d.ex_id = e.ex_id
+		JOIN record r ON r.record_id = d.record_id
+		WHERE r.record_id = #{record_id}
+		ORDER BY r.record_date DESC;
+	</select>
+	
+	
+	<!-- 특정 운동 최근 10번의 세션 정보 가져오기 -->
+	<select id="selectExercise">
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		FROM record r
+		JOIN detail d ON r.record_id = d.record_id
+		JOIN exercise e ON d.ex_id = e.ex_id
+		WHERE r.record_id in (
+		SELECT record_id
+		FROM record
+		WHERE user_seq = #{userSeq}
+		ORDER BY record_date DESC
+		)
+		AND
+		e.ex_id = #{exId}
+		ORDER BY r.record_date DESC, d.detail_id
+		LIMIT 10;
+		;
+	</select>
+	
+	<!-- 부위에 일치하는 운동 가져오기 -->
+	<select id="selectPart">
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		FROM detail d 
+		JOIN exercise e ON d.ex_id = e.ex_id
+		JOIN record r ON r.record_id = d.record_id
+		WHERE e.ex_part = #{exPart} AND r.user_seq = #{userSeq}
+		ORDER BY r.record_date DESC
+		LIMIT 30;
+	</select>
+	
+	<!-- exId에 일치하는 운동 이름 가져오기 -->
+	<select id="selectExerciseName">
+		SELECT ex_name
+		FROM exercise
+		WHERE ex_id = #{exId};
+	</select>
+	
+	<!-- 회원의 신체정보 들고오기 -->
+	<select id="selectWeight">
+		SELECT DATE_FORMAT(record_date,'%Y-%m') record_date, AVG(body_weight) body_weight, AVG(body_fat_mass) body_fat_mass, AVG(skeletal_muscle_mass) skeletal_muscle_mass
+		FROM record
+		WHERE user_seq = #{userSeq}
+		GROUP BY DATE_FORMAT(record_date,'%Y-%m')
+		ORDER BY record_date ASC
+	</select>
+
+	<!-- update -->
+	<update id="updateRecord" parameterType="ExerciseRecord">
+		UPDATE detail
+		SET weight = #{weight}, reps = #{reps}
+		WHERE record_id = #{recordId} AND detail_id = #{detailId};
+	</update>
+	
+	
+	<!-- delete 디테일까지 모두 delete -->
+	<delete id="deleteAllRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE record_id = #{recordId};
+		
+		DELETE FROM record
+		WHERE record_id = #{recordId};		
+	</delete>
+	
+	<!-- 이름은 레코드지만 해당 운동 세트만 제거하는 메소드임 -->
+	<delete id="deleteRecord" parameterType="int">
+		DELETE FROM detail
+		WHERE detail_id = #{detailId};
+	</delete>
+
+</mapper>

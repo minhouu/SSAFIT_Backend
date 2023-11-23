@@ -1,35 +1,25 @@
 package com.ssafy.ssafit.model.dto;
 
-public class Video {
-	private String videoId;
+public class UserArticle {
+	private int articleId;
 	private int writerSeq;
 	private String nickname;
 	private String title;
 	private String content;
-	private String part;
-	private String url;
-	private String videoKey;
-	private String createdAt;
 	private int viewCnt;
+	private String createdAt;
 	private int isEdited;
 
-	public Video() {
+	public int getArticleId() {
+		return articleId;
 	}
 
-	public String getVideoId() {
-		return videoId;
-	}
-
-	public void setVideoId(String videoId) {
-		this.videoId = videoId;
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
 	}
 
 	public int getWriterSeq() {
 		return writerSeq;
-	}
-
-	public void setWriterSeq(int writerSeq) {
-		this.writerSeq = writerSeq;
 	}
 
 	public String getNickname() {
@@ -38,6 +28,10 @@ public class Video {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public void setWriterSeq(int writerSeq) {
+		this.writerSeq = writerSeq;
 	}
 
 	public String getTitle() {
@@ -56,28 +50,12 @@ public class Video {
 		this.content = content;
 	}
 
-	public String getPart() {
-		return part;
+	public int getViewCnt() {
+		return viewCnt;
 	}
 
-	public void setPart(String part) {
-		this.part = part;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getVideoKey() {
-		return videoKey;
-	}
-
-	public void setVideoKey(String videoKey) {
-		this.videoKey = videoKey;
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
 	}
 
 	public String getCreatedAt() {
@@ -88,19 +66,18 @@ public class Video {
 		this.createdAt = createdAt;
 	}
 
-	public int getViewCnt() {
-		return viewCnt;
-	}
-
-	public void setViewCnt(int viewCnt) {
-		this.viewCnt = viewCnt;
-	}
-
 	public int getIsEdited() {
 		return isEdited;
 	}
 
 	public void setIsEdited(int isEdited) {
 		this.isEdited = isEdited;
+	}
+
+	@Override
+	public String toString() {
+		return "UserArticle [articleId=" + articleId + ", writerSeq=" + writerSeq + ", nickname=" + nickname
+				+ ", title=" + title + ", content=" + content + ", viewCnt=" + viewCnt + ", createdAt=" + createdAt
+				+ ", isEdited=" + isEdited + "]";
 	}
 }

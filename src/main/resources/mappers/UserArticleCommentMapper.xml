@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.ssafit.model.dao.UserArticleCommentDao">
+	<resultMap type="UserArticleComment" id="commentMap">
+		<result column="comment_id" property="commentId" />
+		<result column="article_id" property="articleId" />
+		<result column="user_seq" property="userSeq" />
+		<result column="created_at" property="createdAt" />
+		<result column="content" property="content" />
+		<result column="is_edited" property="isEdited" />
+	</resultMap>
+
+	<!-- 특정 게시물의 댓글 반환 -->
+	<select id="selectAll" resultType="UserArticleComment">
+		SELECT c.comment_id, c.article_id, c.created_at, c.content, c.is_edited, c.writer_seq, u.nickname  
+		FROM user_article_comment c
+		JOIN user u ON c.writer_seq = u.user_seq
+		WHERE article_id=#{articleId};
+	</select>
+
+	<!-- <select id="selectOne" resultMap="commentMap"> SELECT * FROM review 
+		WHERE reviewId=#{reviewId}; </select> -->
+
+	<!-- comment 삽입 -->
+	<insert id="insertComment" parameterType="UserArticleComment">
+		INSERT INTO
+		user_article_comment
+		(article_id, writer_seq, content)
+		VALUES
+		(#{articleId}, #{writerSeq}, #{content})
+	</insert>
+
+	<!-- comment update -->
+	<update id="updateComment" parameterType="UserArticleComment">
+		UPDATE
+		user_article_comment SET
+		content = #{content}, is_edited = #{isEdited} WHERE comment_id =
+		#{commentId}
+	</update>
+
+	<!-- delete comment -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM
+		user_article_comment
+		WHERE comment_id = #{commentId}
+	</delete>
+</mapper>

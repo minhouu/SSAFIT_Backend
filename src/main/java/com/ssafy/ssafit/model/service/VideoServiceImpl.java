@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.ssafit.model.dao.VideoDao;
+import com.ssafy.ssafit.model.dto.UserArticle;
 import com.ssafy.ssafit.model.dto.Video;
 
 @Service
@@ -15,9 +16,13 @@ public class VideoServiceImpl implements VideoService {
 	private VideoDao videoDao;
 
 	@Override
-	public List<Video> getVideoList() {
-		System.out.println("비디오 다 가져와");
-		return videoDao.selectAll();
+	public List<Video> getVideoList(int offset) {
+		return videoDao.selectAll(offset);
+	}
+	
+	@Override
+	public List<Video> getVideoListBySearch(int offset, String searchType, String searchKeyword) {
+		return videoDao.selectBySearch(offset, searchType, searchKeyword);
 	}
 
 	@Override
@@ -26,21 +31,29 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public void addVideo() {
-		// TODO Auto-generated method stub
-
+	public void insertVideo(Video video) {
+		videoDao.insertOne(video);
 	}
 
 	@Override
-	public void updateVideo() {
-		// TODO Auto-generated method stub
-
+	public void updateVideo(Video video) {
+		videoDao.updateOne(video);
 	}
 
 	@Override
-	public void deleteVideo() {
-		// TODO Auto-generated method stub
-
+	public void deleteVideo(int videoId) {
+		videoDao.deleteOne(videoId);
 	}
 
+	@Override
+	public void increaseViewCnt(int videoId) {
+		videoDao.increaseViewCnt(videoId);
+	}
+
+	@Override
+	public int selectCount(String searchType, String searchKeyword) {
+		return videoDao.selectCount(searchType, searchKeyword);
+	}
+
+	
 }

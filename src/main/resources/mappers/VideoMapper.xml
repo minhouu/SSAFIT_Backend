@@ -4,25 +4,109 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.ssafit.model.dao.VideoDao">
-	<resultMap type="Video" id="videoMap">
-		<result column="id" property="id" />
-		<result column="part" property="part" />
-		<result column="channelName" property="channelName" />
-		<result column="url" property="url" />
-		<result column="created_at" property="created_at" />
-		<result column="view_cnt" property="view_cnt" />
-	</resultMap>
+	<!-- <resultMap type="Video" id="videoMap"> <result column="id" property="id" 
+		/> <result column="part" property="part" /> <result column="channel_name" 
+		property="channelName" /> <result column="url" property="url" /> <result 
+		column="created_at" property="created_at" /> <result column="view_cnt" property="view_cnt" 
+		/> </resultMap> -->
 
 	<!-- 전체 비디오 조회 -->
-	<select id="selectAll" resultType="Video">
-		SELECT *
-		FROM Video;
+	<select id="selectAll" resultType="Video" parameterType="int">
+		SELECT v.video_id,
+		v.writer_seq, u.nickname, v.title, v.content, v.view_cnt,
+		v.created_at, v.is_edited, v.part, v.video_key
+		FROM video v
+		JOIN user u
+		ON
+		v.writer_seq = u.user_seq
+		ORDER BY created_at DESC LIMIT 6 OFFSET #{offset}
+	</select>
+	
+	<!-- 비디오 검색 결과 반환 -->
+	<select id="selectBySearch">
+		SELECT v.video_id,
+		v.writer_seq, u.nickname, v.title, v.content,
+		v.view_cnt,
+		v.created_at, v.is_edited
+		FROM video v
+		JOIN user u
+		ON
+		v.writer_seq = u.user_seq
+		<choose>
+			<when test="searchType == 'writer'">
+				WHERE u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'title'">
+				WHERE v.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				WHERE v.content LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+		</choose>
+		ORDER BY created_at DESC LIMIT 10 OFFSET #{offset}
+	</select>
+	
+	<!-- 비디오 개수 반환 -->
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) FROM
+		video v
+		JOIN user u ON v.writer_seq =
+		u.user_seq
+		<choose>
+			<when test="searchType == 'writer'">
+				WHERE u.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'title'">
+				WHERE v.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+			<when test="searchType == 'content'">
+				WHERE v.content LIKE CONCAT('%', #{searchKeyword}, '%')
+			</when>
+		</choose>
+	</select>
+	<!-- 비디오 1개 조회 -->
+	<select id="selectOne" resultType="Video">
+		SELECT v.video_id,
+		v.writer_seq, u.nickname, v.title, v.content, v.view_cnt,
+		v.created_at, v.is_edited, v.part, v.video_key, v.url
+		FROM video v
+		JOIN user u
+		ON
+		v.writer_seq = u.user_seq
+		WHERE
+		video_id=#{videoId};
 	</select>
 
-	<select id="selectOne" resultMap="videoMap">
-		SELECT *
-		FROM Video
-		WHERE
-		id=#{id};
-	</select>
+	<!-- 비디오 추가 -->
+	<insert id="insertOne" parameterType="Video">
+		INSERT INTO video
+		(writer_seq, title, content, part, video_key, url)
+		VALUES (#{writerSeq},
+		#{title}, #{content}, #{part}, #{videoKey}, #{url})
+	</insert>
+
+	<!-- 비디오 업데이트 -->
+	<update id="updateOne" parameterType="Video">
+		UPDATE
+		video SET
+		title =
+		#{title}, content = #{content}, video_key = #{videoKey}, is_edited =
+		#{isEdited}, part = #{part}, url = #{url}
+		WHERE video_id = #{videoId}
+	</update>
+	
+	<!-- 비디오 삭제 -->
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM
+		video
+		WHERE video_id = #{videoId}
+	</delete>
+	
+	
+	<update id="increaseViewCnt" parameterType="int">
+		UPDATE video
+		SET view_cnt = view_cnt + 1
+		WHERE video_id = #{videoId};
+	</update>
+	
 </mapper>

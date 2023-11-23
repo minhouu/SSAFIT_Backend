@@ -1,20 +1,21 @@
 package com.ssafy.ssafit.model.dto;
 
 public class User {
-	private int user_seq;
+	private int userSeq;
 	private String id;
 	private String password;
 	private String nickname;
+	private int userType;
 
 	public User() {
 	}
 
-	public int getUser_seq() {
-		return user_seq;
+	public int getUserSeq() {
+		return userSeq;
 	}
 
-	public void setUser_seq(int user_seq) {
-		this.user_seq = user_seq;
+	public void setUserSeq(int userSeq) {
+		this.userSeq = userSeq;
 	}
 
 	public String getId() {
@@ -41,8 +42,18 @@ public class User {
 		this.nickname = nickname;
 	}
 
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
-		return "User [user_seq=" + user_seq + ", id=" + id + ", password=" + password + ", nickname=" + nickname + "]";
+		return "User [userSeq=" + userSeq + ", id=" + id + ", password=" + password + ", nickname=" + nickname
+				+ ", userType=" + userType + "]";
 	}
+
 }

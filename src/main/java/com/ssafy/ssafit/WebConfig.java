@@ -1,15 +1,21 @@
 package com.ssafy.ssafit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ssafy.ssafit.interceptor.LoginInterceptor;
+
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-
+	
+	@Autowired 
+	private LoginInterceptor loginInterceptor;
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
@@ -22,7 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
 	//필드를 통해 의존성을 주입 받고
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		//등록하면된다...
+		 registry.addInterceptor(loginInterceptor)
+		 .addPathPatterns("/**")
+		 .excludePathPatterns("/user/**", "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs");
 	}
-
 }

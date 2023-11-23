@@ -5,19 +5,20 @@
 
 <mapper namespace="com.ssafy.ssafit.model.dao.UserDao">
 	<resultMap type="User" id="userMap">
-		<result column="user_seq" property="user_seq" />
+		<result column="user_seq" property="userSeq" />
 		<result column="id" property="id" />
 		<result column="password" property="password" />
 		<result column="nickname" property="nickname" />
+		<result column="user_type" property="userType" />
 	</resultMap>
 
 	<insert id="insertUser" parameterType="User">
-		INSERT INTO user (id, password, nickname)
+		INSERT INTO user (id, password, nickname, user_type)
 		VALUES
-		(#{id}, #{password}, #{nickname});
+		(#{id}, #{password}, #{nickname}, #{userType});
 	</insert>
 
-	<select id="getUser" resultMap="userMap">
+	<select id="getUser" parameterType="String" resultMap="userMap">
 		SELECT * FROM user WHERE
 		id=#{id}
 	</select>
