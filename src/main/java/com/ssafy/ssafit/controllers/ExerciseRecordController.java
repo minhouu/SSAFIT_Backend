@@ -54,7 +54,7 @@ public class ExerciseRecordController {
 	}
 
 	@GetMapping("/{recordId}")
-	@ApiOperation(value = "해당 운동 종목 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")
+	@ApiOperation(value = "해당 날짜 운동 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")
 	public ResponseEntity<List<ExerciseDetail>> selectRecord(@PathVariable("recordId") int recordId) {		
 		List<ExerciseDetail> data = recordService.selectRecord(recordId);
 		return new ResponseEntity<List<ExerciseDetail>>(data, HttpStatus.OK);

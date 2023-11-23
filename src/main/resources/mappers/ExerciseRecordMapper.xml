@@ -45,7 +45,7 @@
 	
 	<!-- 모든 운동  -->
 	<select id="selectRecord">
-		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, e.ex_name, e.ex_part, d.set_num, d.weight, d.reps
+		SELECT r.record_id, d.detail_id, DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, e.ex_name, e.ex_id, e.ex_part, d.set_num, d.weight, d.reps
 		FROM detail d
 		JOIN exercise e ON d.ex_id = e.ex_id
 		JOIN record r ON r.record_id = d.record_id
@@ -75,7 +75,7 @@
 	
 	<!-- 부위에 일치하는 운동 가져오기 -->
 	<select id="selectPart">
-		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_part, e.ex_name, d.set_num, d.weight, d.reps
+		SELECT DATE_FORMAT(r.record_date,'%Y-%m-%d') as record_date, d.record_id, d.detail_id, e.ex_part, e.ex_id, e.ex_name, d.set_num, d.weight, d.reps
 		FROM detail d 
 		JOIN exercise e ON d.ex_id = e.ex_id
 		JOIN record r ON r.record_id = d.record_id

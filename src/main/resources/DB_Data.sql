@@ -1,6 +1,6 @@
 insert into user (id, password, nickname, user_type)
 values 
-('dlawhdfbf12', 1234, '메카종율', 2), #1
+('dlawhdfbf12', 'zcczZypSPzSyGF2iGrwAGCS/0x4CsEcf2ytJuy7/xF8DidYXRDAXlyXpA2wOuXB+3RTTFyQsrLITrVpD7fKvJdNHVJBAxG+AJYiZU7A8SUQ=', '메카종율', 2), #1
 ('tortor1403', 1234, '고늑최', 2), #2
 ('pnlkc', 1234, '최지찬', 1), #3
 ('animus', 1234, '유동건', 1), #4
@@ -782,3 +782,5 @@ VALUES
 (33, 12, 5, 40, 20);
 
 commit;
+
+select * from user;
