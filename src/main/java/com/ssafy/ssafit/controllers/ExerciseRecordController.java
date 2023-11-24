@@ -39,9 +39,7 @@ public class ExerciseRecordController {
 	@ApiOperation(value = "기록 추가", notes = "새로운 운동기록을 추가합니다.\nParameter 나중에 채워 넣음")
 	public ResponseEntity<String> addRecord(@RequestBody ExerciseRecord exerciseRecord,  @RequestParam("user-seq") int userSeq) {
 		exerciseRecord.setUserSeq(userSeq);
-		
 		recordService.addRecord(exerciseRecord);
-		
 		return new ResponseEntity<String>("Record Added", HttpStatus.ACCEPTED);
 	}
 	
@@ -64,7 +62,6 @@ public class ExerciseRecordController {
 	@GetMapping("/exerciseName/{exId}")
 	@ApiOperation(value = "해당 운동 종목 기록 가져오기", notes = "해당 운동 종목 기록을 최신 10개 가져옵니다.\\nParameter { exercise-name : exerciseName }")
 	public ResponseEntity<List<ExerciseRecord>> selectExercise(@PathVariable("exId") int exId,  @RequestParam("user-seq") int userSeq) {
-		
 		List<ExerciseRecord> data = recordService.selectExercise(userSeq, exId);
 		return new ResponseEntity<List<ExerciseRecord>>(data, HttpStatus.OK);
 	}
@@ -81,9 +78,7 @@ public class ExerciseRecordController {
 	@GetMapping("/trainner")
 	@ApiOperation(value = "트레이너 이름 가져오기", notes = "userType이 2로 등록된 트레이너들의 이름을 불러옵니다.")
 	public ResponseEntity<List<User>> selectTrainner() {
-		
 		List<User> data = recordService.selectTrainner();
-		
 		return new ResponseEntity<List<User>>(data, HttpStatus.OK);
 	}
 	
@@ -115,8 +110,6 @@ public class ExerciseRecordController {
 	@PutMapping("/{recordId}/{detailId}")
 	@ApiOperation(value = "운동 기록 업데이트", notes = "기존 운동 기록을 업데이트합니다. request로 exerciseRecord의 온전한 객체를 보내줍니다.")
 	public ResponseEntity<String> updateRecord(@RequestBody ExerciseRecord exerciseRecord, @RequestParam("user-seq") int userSeq) {
-		System.out.println(exerciseRecord.toString());
-		
 		recordService.updateRecord(exerciseRecord);
 		return new ResponseEntity<String>("Update Success", HttpStatus.ACCEPTED);
 	}
