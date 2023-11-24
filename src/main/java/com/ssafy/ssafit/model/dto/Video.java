@@ -103,4 +103,12 @@ public class Video {
 	public void setIsEdited(int isEdited) {
 		this.isEdited = isEdited;
 	}
+
+	@Override
+	public String toString() {
+		return "Video [videoId=" + videoId + ", writerSeq=" + writerSeq + ", nickname=" + nickname + ", title=" + title
+				+ ", content=" + content + ", part=" + part + ", url=" + url + ", videoKey=" + videoKey + ", createdAt="
+				+ createdAt + ", viewCnt=" + viewCnt + ", isEdited=" + isEdited + "]";
+	}
+	
 }
